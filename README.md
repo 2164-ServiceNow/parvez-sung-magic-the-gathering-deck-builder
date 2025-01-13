@@ -19,21 +19,21 @@ welcoming community for Magic: The Gathering enthusiasts.
 
 **User Stories:** (8 Total - 4 Per Developer)
 
-1.  Card Search 
+1.  Card Search: 
     As a user, I can query for Magic: The Gathering cards so that I can learn more about them.
-2.  Booster Sets Search
+2.  Booster Sets Search:
     As a user, I can query for Magic: The Gathering booster sets so that I can learn more about their contents and potential card pulls.
-3.  Keyword Queries
+3.  Keyword Queries:
     As a user, I can query for certain keywords (i.e. 'flying', or 'trample') so that I can learn more about them and better understand the game's mechanics when building my deck.
-4.  Deck Assembly
+4.  Deck Assembly:
     As a user, I can add or remove cards in a deck so that I can build a deck without needing physical cards.
-5.  Deck Statistics
+5.  Deck Statistics:
     As a user, I can view the statistics of my deck and cards (such as mana costs or card types) so that I can judge what cards to add or remove from my deck as part of my strategy.
-6.  Favorite Cards 
+6.  Favorite Cards: 
     As a user, I can favorite/save cards so that I can make and organize a wishlist.
 7.  Save and Revisit Deck
     As a user, I can save my deck's information so that I can come back to the deckbuilder if I ever want to view or edit my deck at a later time.
-8.  Playtest Mode 
+8.  Playtest Mode: 
     As a user, I can simulate a playtest of my deck so that I can identify flaws or synergies by virtually playing with my cards. At the start of the playtest, the deck should shuffle, and I should draw a random 7-card starting hand.
     (Optional advanced features: battlefield, graveyard, exile, and commander zones; tapping cards; adding custom counters on cards.)
 
