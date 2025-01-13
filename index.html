@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Magic: the Gathering Deckbuilder</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+        <link rel="stylesheet" href="app/pages/navbar.css">
+    </head>
+    <body style="margin: 0; padding: 0; font-family: 'Gotham Narrow', 'Arial', serif;">
+        <div ng-app="magicApp">
+            <navbar></navbar>
+            <h1>Welcome to the Magic: the Gathering Deckbuilder!</h1>
+            <ng-view></ng-view>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
