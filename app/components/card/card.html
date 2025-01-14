@@ -1,0 +1,15 @@
+<!-- <p>{{cards.results}}</p> -->
+<p>Query: {{searchValue}}</p>
+<div ng-if="cards.cards && cards.cards.length > 1">
+    <!-- <button ng-click=”previous()” ng-if=”pokemons.previous”>Previous Page</button>
+    <button ng-click=”next()” ng-if=”pokemons.next”>Next Page</button> -->
+    <ul>
+        <li ng-repeat="card in cards.cards" ng-if="card.imageUrl !== undefined">
+            {{card.name}}
+        </li>
+    </ul>
+</div>
+
+<div ng-if="cards === undefined || 1 >= cards.cards.length">
+    <p>NOT FOUND IN DATABASE</p>
+</div>
