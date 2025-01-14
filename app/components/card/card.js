@@ -4,6 +4,7 @@ angular.module('card', [])
 	templateUrl: 'app/components/card/card.html',
 	controller: function($scope, $http, searchBarService){
 		$scope.cards = ""
+        $scope.cardDetails = ''
 
 		$scope.$watch(function () {
 			return searchBarService.getQuery()
@@ -16,6 +17,15 @@ angular.module('card', [])
 				console.log($scope.cards)
 			})
 		})
+
+        $scope.details = function(cardDetails) {
+            $scope.cardDetails = cardDetails
+            console.log(cardDetails)
+        }
+
+        $scope.$on('resetDetails', function() {
+            $scope.cardDetails = '';
+        });
 		
 		// $scope.next = function() {
 		// 	$http.get(‘${$scope.pokemons.next}’) 	// $http.post(‘<api-url>’,  <data here>) `…/?offset=$(80)&limit=${20}`

@@ -4,6 +4,7 @@ angular.module('set', [])
 	templateUrl: 'app/components/set/set.html',
 	controller: function($scope, $http, searchBarService){
 		$scope.sets = ""
+        $scope.setDetails = ''
 
 		$scope.$watch(function () {
 			return searchBarService.getQuery()
@@ -16,5 +17,14 @@ angular.module('set', [])
 				console.log($scope.sets)
 			})
 		})
+
+        $scope.details = function(setDetails) {
+            $scope.setDetails = setDetails
+            console.log(setDetails)
+        }
+
+        $scope.$on('resetDetails', function() {
+            $scope.setDetails = '';
+        });
 	}
 })

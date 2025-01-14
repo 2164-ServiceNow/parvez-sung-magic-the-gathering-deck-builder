@@ -1,5 +1,5 @@
 angular.module('magicApp')
-	.service('searchBarService', function(){
+	.service('searchBarService', function($rootScope){
 		this.query = "";
 
 		this.setQuery = function(query){
@@ -10,4 +10,8 @@ angular.module('magicApp')
 		this.getQuery = function() {
 			return this.query
 		}
+
+        this.resetDetails = function() {
+            $rootScope.$broadcast("resetDetails");
+        };
 	})

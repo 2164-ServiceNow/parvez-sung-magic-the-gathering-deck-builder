@@ -7,6 +7,7 @@ angular.module('searchBar', [])
 
         $scope.search = function (){
 			searchBarService.setQuery($scope.searchValue)
+            searchBarService.resetDetails()
 			console.log("search")
 		}
     }
