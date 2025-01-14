@@ -45,7 +45,7 @@ welcoming community for Magic: The Gathering enthusiasts.
     *   Setup angular environment  
         *   npm install angular@1.8.2 
         *   npm install -g http-server 
-        *   nptm install -g live-server 
+        *   npm install -g live-server 
         *   Add files 
             *   index.html 
             *   app.js	 
@@ -53,5 +53,5 @@ welcoming community for Magic: The Gathering enthusiasts.
 
 **Collaborators:**
 
-*   Timothy Sung - GitHub Username: TimmyKSung
+*   Timothy Sung - GitHub Username: TimmyKSung / MSUTS2021 (first few commits)
 *   Anosh Parvez - GitHub Username: aparvez1
