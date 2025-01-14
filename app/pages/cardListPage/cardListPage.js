@@ -1,5 +1,5 @@
 angular.module('cardListPage', [])
 
-.controller('cardsCtrl', function($scope){
-    $scope.cardName = "Archangel Avacyn"
+.controller('cardsCtrl', function(searchBarService){
+    searchBarService.setQuery("");
 })

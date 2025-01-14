@@ -1,0 +1,12 @@
+<p>Query: {{searchValue}}</p>
+<div ng-if="sets.sets && sets.sets.length > 1">
+    <ul>
+        <li ng-repeat="set in sets.sets">
+            {{set.name}}
+        </li>
+    </ul>
+</div>
+
+<div ng-if="sets === undefined || 0 === sets.sets.length">
+    <p>NOT FOUND IN DATABASE</p>
+</div>
