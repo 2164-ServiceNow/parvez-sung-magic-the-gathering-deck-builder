@@ -1,0 +1,32 @@
+<div>
+    <input ng-model="newDeckName" placeholder="New Deck"/>
+    <button ng-click='createDeck()'>Create Deck</button>
+</div>
+<div>
+    <button ng-click="clearDecks()">Clear All Decks</button>
+</div>
+<div>
+    <input ng-model="renameSelectDeckName" placeholder="Enter new name" ng-show="selectedDeck !== ''"/>
+    <button ng-click='renameSelectDeck()' ng-show="selectedDeck !== ''">Rename Deck</button>       
+</div>
+
+<div ng-if="decks.length !== 0 && selectedDeck === ''">
+    <ul>
+        <li ng-repeat="(index, deck) in decks track by $index">
+            <button ng-click="selectDeck(index, deck)">{{deck.name}}</button>
+        </li>
+    </ul>
+</div>
+<div ng-if="selectedDeck !== ''">
+    <div>
+        <button ng-click="clearSelectDeck()">Return</button>
+    </div>
+    <button ng-click="createDeck('Copy of ' + selectedDeck.name, selectedDeck.color, selectedDeck.cards)">Copy Deck</button>
+    <div>{{selectedDeck.name}}</div>
+    <div>{{selectedDeck.color}}</div>
+    <div>{{selectedDeck.cards}}</div>
+    <button ng-click="deleteSelectDeck()">Delete</button>
+</div>
+<div ng-if="decks.length === 0">
+    <p> NO DECKS SAVED</p>
+</div>

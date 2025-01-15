@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'searchBar', 'card', 'set'])
+angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'searchBar', 'card', 'set', 'deck'])
 .config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
@@ -13,6 +13,9 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'searchBar
         .when("/sets", {
             templateUrl: "pages/setListPage/setListPage.html",
             controller: "setsCtrl"
+        })
+        .when("/decks", {
+            templateUrl: "pages/deckListPage/deckListPage.html",
         });
 
     $locationProvider.html5Mode({
