@@ -2,24 +2,24 @@
 <html lang="en" ng-app="magicApp">
     <head>
         <title>Magic: the Gathering Deckbuilder</title>
-        <link rel="icon" href="app/images/mtgfavicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/mtgfavicon.ico" type="image/x-icon">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
-        <link rel="stylesheet" href="app/pages/navbar/navbar.css">
+        <link rel="stylesheet" href="pages/navbar/navbar.css">
     </head>
     <body style="margin: 0; padding: 0; font-family: 'Gotham Narrow', 'Arial', serif;">
         <div>
-            <div ng-include="'app/pages/navbar/navbar.html'"></div>
+            <div ng-include="'pages/navbar/navbar.html'"></div>
             <h1>Welcome to the Magic: the Gathering Deckbuilder!</h1>
             <div ng-view></div>
         </div>
         <script src="app.js"></script> 
-        <script src="app/services/searchBarService.js"></script>
-        <script src="app/components/searchBar/searchBar.js"></script>
-        <script src="app/pages/cardListPage/cardListPage.js"></script>
-        <script src="app/pages/setListPage/setListPage.js"></script>
-        <script src="app/components/card/card.js"></script>
-        <script src="app/components/set/set.js"></script>
+        <script src="services/searchBarService.js"></script>
+        <script src="components/searchBar/searchBar.js"></script>
+        <script src="pages/cardListPage/cardListPage.js"></script>
+        <script src="pages/setListPage/setListPage.js"></script>
+        <script src="components/card/card.js"></script>
+        <script src="components/set/set.js"></script>
     </body>
 </html>

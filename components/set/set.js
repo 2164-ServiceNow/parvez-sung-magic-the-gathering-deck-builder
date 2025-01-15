@@ -1,7 +1,7 @@
 angular.module('set', [])
 
 .component('set', {
-	templateUrl: 'app/components/set/set.html',
+	templateUrl: 'components/set/set.html',
 	controller: function($scope, $http, searchBarService){
 		$scope.sets = ""
         $scope.setDetails = ''

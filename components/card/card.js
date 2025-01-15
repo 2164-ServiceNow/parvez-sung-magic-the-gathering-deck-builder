@@ -1,7 +1,7 @@
 angular.module('card', [])
 
 .component('card', {
-	templateUrl: 'app/components/card/card.html',
+	templateUrl: 'components/card/card.html',
 	controller: function($scope, $http, searchBarService){
 		$scope.cards = ""
         $scope.cardDetails = ''
