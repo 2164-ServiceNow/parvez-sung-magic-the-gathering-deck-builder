@@ -5,6 +5,7 @@ angular.module('set', [])
 	controller: function($scope, $http, searchBarService){
 		$scope.sets = ""
         $scope.setDetails = ''
+		$scope.booster = ''
 
 		$scope.$watch(function () {
 			return searchBarService.getQuery()
@@ -23,8 +24,17 @@ angular.module('set', [])
             console.log(setDetails)
         }
 
+		$scope.pullBooster = function(setCode) {
+			$http.get(`https://api.magicthegathering.io/v1/sets/${setCode}/booster`)
+			.then((response) => {
+				$scope.booster = response.data;
+				console.log(response.data)
+			})
+        }
+
         $scope.$on('resetDetails', function() {
             $scope.setDetails = '';
+			$scope.booster = '';
         });
 	}
 })
