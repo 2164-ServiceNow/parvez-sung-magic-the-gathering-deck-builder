@@ -1,5 +1,5 @@
 <p>Query: {{searchValue}}</p>
-<div ng-if="sets.sets && sets.sets.length > 1 && setDetails == ''">
+<div ng-if="sets.sets && sets.sets.length > 0 && setDetails == ''">
     <ul>
         <li ng-repeat="set in sets.sets">
             <button ng-click="details(set)" ng-if="set.name">{{set.name}}</button>

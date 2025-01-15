@@ -23,7 +23,7 @@ angular.module('set', [])
             $scope.setDetails = setDetails
             console.log(setDetails)
         }
-
+		// https://api.magicthegathering.io/v1/sets/por/booster and https://api.magicthegathering.io/v1/sets/4ed/booster/ works
 		$scope.pullBooster = function(setCode) {
 			$http.get(`https://api.magicthegathering.io/v1/sets/${setCode}/booster`)
 			.then((response) => {
