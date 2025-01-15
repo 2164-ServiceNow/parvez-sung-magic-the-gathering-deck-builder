@@ -1,0 +1,12 @@
+<h1>Cards</h1>
+
+<ul>
+  <li ng-repeat="card in cards.cards">
+    <strong>{{ card.name }}</strong>
+  </li>
+</ul>
+
+<!-- If there are no cards, show a message -->
+<div ng-if="cards.length === 0">
+  <p>No cards available.</p>
+</div>

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Magic: the Gathering Deckbuilder</title>
-        <link rel="icon" href="app/images/mtgfavicon.ico" type="image/x-icon">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
-        <link rel="stylesheet" href="app/pages/navbar.css">
-    </head>
-    <body style="margin: 0; padding: 0; font-family: 'Gotham Narrow', 'Arial', serif;">
-        <div ng-app="magicApp">
-            <div ng-include="'app/pages/navbar.html'"></div>
-            <h1>Welcome to the Magic: the Gathering Deckbuilder!</h1>
-            <searchbar></searchbar>
-            <div ng-view></div>
-        </div>
-        <script src="app/components/searchBar/searchBar.js"></script>
-        <script src="app/pages/cardsPage/cards.js"></script>
-        <script src="app.js"></script>
-    </body>
+<html lang="en" ng-app="magicApp">
+  <head>
+    <title>Magic: the Gathering Deckbuilder</title>
+    <!-- <link rel="icon" href="app/images/mtgfavicon.ico" type="image/x-icon" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+    <!-- <link rel="stylesheet" href="app/pages/navbar.css" /> -->
+  </head>
+  <body>
+    index
+    <a href="/">Home</a>
+    <a href="/cards">Cards</a>
+    <cards-paginated></cards-paginated>
+    <div ng-view></div>
+    <!-- Include app.js first to define the module -->
+    <script src="app.js"></script>
+    <script src="services/cardService.js"></script>
+    <script src="components/cardsPaginated/cardsPaginated.js"></script>
+  </body>
 </html>

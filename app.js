@@ -1,18 +1,21 @@
-'use strict';
+"use strict";
 
-angular.module("magicApp", ['ngRoute', 'cards', 'searchBar'])
-.config(function($routeProvider, $locationProvider) {
+angular
+  .module("magicApp", ["ngRoute", "cardsPaginated"])
+  .config(function ($routeProvider, $locationProvider) {
     $routeProvider
-        .when("/", {
-            templateUrl: "app/pages/main.html"
-        })
-        .when("/cards", {
-            templateUrl: "app/pages/cardsPage/cards.html",
-            controller: "cardsCtrl"
-        });
+      .when("/", {
+        templateUrl: "pages/main.html",
+      })
+      .when("/cards", {
+        templateUrl: "components/cardsPaginated/cardsPaginated.html",
+        // controller: "cardsPaginatedController",
+      });
+
+    // $locationProvider.hashPrefix("");
 
     $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
+      enabled: true,
+      requireBase: true,
     });
-});
+  });
