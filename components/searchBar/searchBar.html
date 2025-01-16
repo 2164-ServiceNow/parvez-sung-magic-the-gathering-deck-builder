@@ -1,2 +1,95 @@
-<input ng-model="searchValue"/>
-<button ng-click='search()'>Search</button>
+<label for="searchText">Choose an option: </label>
+<input id="searchText" ng-model="searchValue" /> 
+<label for="cmc">CMC: </label>
+<input id="cmc" ng-model="cmcValue" type="number" style="width: 50px;"/>
+<label for="pageSize">Results per page: </label>
+<select id="pageSize" ng-model="pageSize" ng-init="pageSize='20'">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+</select>
+
+<div id="colorOptions">
+      <!-- Select All Checkbox -->
+      <h3>Level of Rarity</h3>
+        <label>
+            <input type="checkbox" ng-model="selectAllColors" 
+               ng-change="toggleAll(colors, selectAllColors)"> Select All
+        </label>
+        <!-- Individual Color Checkboxes -->
+        <label ng-repeat="color in colors">
+            <input
+                type="checkbox"
+                ng-model="color.value"
+                ng-change="updateSelectAll(colors)"
+            /> {{ color.name }}
+        </label>
+    <br><br>
+</div>
+
+<div id="rarityOptions">
+    <h3>Level of Rarity</h3>
+    <label>
+        <input type="checkbox" ng-model="selectAllRarities" ng-change="toggleAll(rarities, selectAllRarities)"> Select All
+    </label>
+    <label ng-repeat="rarity in rarities">
+        <input
+            type="checkbox"
+            ng-model="rarity.value"
+            ng-change="updateSelectAll(rarities)"
+        /> {{ rarity.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="superTypeOptions">
+    <h3>Super Types</h3>
+    <label>
+        <input type="checkbox" ng-model="selectAllSuperTypes" ng-change="toggleAll(superTypes, selectAllSuperTypes)"> Select All
+    </label>
+    <label ng-repeat="superType in superTypes">
+        <input
+            type="checkbox"
+            ng-model="superType.value"
+            ng-change="updateSelectAll(superTypes)"
+        /> {{ superType.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="typeOptions">
+    <h3>Card Types</h3>
+    <label>
+        <input type="checkbox" ng-model="selectAllTypes" ng-change="toggleAll(types, selectAllTypes)"> Select All
+    </label>
+    <label ng-repeat="type in types">
+        <input
+            type="checkbox"
+            ng-model="type.value"
+            ng-change="updateSelectAll(types)"
+        /> {{ type.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="subTypesOptions">
+    <h3>Sub Types</h3>
+    <label>
+        <input type="checkbox" ng-model="selectAllSubTypes" ng-change="toggleAll(subTypes, selectAllSubTypes)"> Select All
+    </label>
+    <label ng-repeat="subType in subTypes">
+        <input
+            type="checkbox"
+            ng-model="subType.value"
+            ng-change="updateSelectAll(subTypes)"
+        /> {{ subType.name }}
+    </label>
+    <br><br>
+</div>
+<button ng-click="search()">Search</button>
+
+      <p><strong>Selected Colors:</strong> {{ selectedColors.join(', ') || 'None' }}</p>
+  <!-- <p id="output"></p> -->
+</label>
