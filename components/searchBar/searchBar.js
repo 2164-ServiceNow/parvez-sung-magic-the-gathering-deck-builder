@@ -1,51 +1,32 @@
 angular.module("searchBar", []).component("searchbar", {
   templateUrl: "components/searchBar/searchBar.html",
   controller: function SearchBarCtrl($scope, searchBarService) {
-    $scope.pageNumber = 0; // default for page number
+        
+    $scope.searchValue = ""; // ng-model, default for search value
+    $scope.pageNumber = 1; // default for page number
     $scope.pageSize = 20; // default for number of cards per page
-    $scope.cmcValue = 0; // variable from cummulatie mana cost
+    $scope.cmcValue = 1; // variable from cummulatie mana cost
 
+    searchBarService.setQuery(`&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`);
     // Color selection goes here
     $scope.selectedColors = []; //selects colors in the search
-    $scope.searchValue = ""; // text that is to be searched
 
     // NG-Model array for colors to be selected
     $scope.colors = [
-      { name: "white", value: false },
-      { name: "blue", value: false },
-      { name: "black", value: false },
-      { name: "red", value: false },
-      { name: "green", value: false },
-    ];
-
-    // toggle All function for colors
-    $scope.toggleAll = function (array, selectAll, key = "value") {
-      array.forEach((item) => (item[key] = selectAll));
-    };
-
-    // if all colors are selected used in the toggle
-    $scope.selectAllColors = false;
-
-    $scope.updateSelectAll = function (array, key = "value") {
-      $scope.selectAllColors = array.every((item) => item[key]);
-    };
-
-    $scope.joinArrayMembers = function (
-      array,
-      key = "value",
-      nameKey = "name"
-    ) {
-      return array
-        .filter((item) => item[key]) // Filter where key is true
-        .map((item) => item[nameKey]) // Extract names using nameKey
-        .join(","); // Join with commas
-    };
+      { label: "Select All", name:"selectAll", value: false },
+      { label: "white", name:"W",value: false },
+      { label: "blue", name:"U",value: false },
+      { label: "black", name:"B",value: false },
+      { label: "red", name:"R",value: false },
+      { label: "green", name:"G",value: false },
+    ];    
 
     // array to put selected rarities in
     $scope.selectedRarities = [];
 
     // level of card Rarities include Common, Uncommon, Rare, Mythic Rare, Special, Basic Land
     $scope.rarities = [
+      { name: "selectAll", value: false },
       { name: "Common", value: false },
       { name: "Uncommon", value: false },
       { name: "Rare", value: false },
@@ -54,14 +35,12 @@ angular.module("searchBar", []).component("searchbar", {
       { name: "Basic Land", value: false },
     ];
 
-    // toggle variable for rarity selection
-    $scope.selectAllRarities = false;
-
     // array to put selected superTypes in
     $scope.selectedSuperTypes = [];
 
     // superTypes of cards include Basic, Legendary, Snow, World, Ongoing, Elite, Host, Saga
     $scope.superTypes = [
+      { name: "selectAll", value: false },
       { name: "Basic", value: false },
       { name: "Legendary", value: false },
       { name: "Snow", value: false },
@@ -72,14 +51,12 @@ angular.module("searchBar", []).component("searchbar", {
       { name: "Saga", value: false },
     ];
 
-    // toggle variable for superType selection
-    $scope.selectAllSuperTypes = false;
-
     // array to put selected types in
     $scope.selectedTypes = [];
 
     // types of cards include Creature, Enchantment, Instant, Sorcery, Artifact, Planeswalker, Land
     $scope.types = [
+      { name: "selectAll", value: false },
       { name: "Creature", value: false },
       { name: "Enchantment", value: false },
       { name: "Instant", value: false },
@@ -89,14 +66,12 @@ angular.module("searchBar", []).component("searchbar", {
       { name: "Land", value: false },
     ];
 
-    // toggle variable for type selection
-    $scope.selectAllTypes = false;
-
     // array to put selected subTypes in
     $scope.selectedSubTypes = [];
-
+ 
     // unique subTypes of cards
     $scope.subTypes = [
+      { name: "selectAll", value: false },
       { name: "Human", value: false },
       { name: "Elf", value: false },
       { name: "Goblin", value: false },
@@ -113,38 +88,58 @@ angular.module("searchBar", []).component("searchbar", {
       { name: "Squirrel", value: false },
     ];
 
+    // function to join result of checbox arrays into a string
+    $scope.joinArrayMembers = function (array, key = "value",nameKey = "name") {
+      return array
+        .filter((item)=>item.name !== "selectAll") // Filter out selectAll
+        .filter((item) => item[key]) // Filter where key is true
+        .map((item) => item[nameKey]) // Extract names using nameKey
+        .join(","); // Join with commas
+    };
+    
+    // function to toggle checkboxes
+    $scope.toggle = function(array, name, value){
+      console.log(array);
+      if(name ==="selectAll" && value === true){
+            array.forEach((item) => {
+            item.value = true;
+          });
+      } else if(name ==="selectAll" && value === false) {
+          array.forEach((item) => {
+          item.value = false;
+        });
+      } else if(name !== "selectAll" && value === false){
+        array[0].value = false;
+      } else {
+        array.filter((item) => item.name !== "selectAll").every((item) => item.value === true) ? array[0].value = true : array[0].value = false;
+      }
+    }    
+
+    // The Search Function
     $scope.search = function () {
-      console.log($scope.colors);
-      searchBarService.setQuery(
-        `${
-          $scope.colors.length > 0
-            ? `colors=${$scope.joinArrayMembers($scope.colors)}&`
-            : ""
-        }
-            ${
-              $scope.rarities.length > 0
-                ? `rarity=${$scope.joinArrayMembers($scope.rarities)}&`
-                : ""
-            }
-            ${
-              $scope.superTypes.length > 0
-                ? `supertypes=${$scope.joinArrayMembers($scope.superTypes)}&`
-                : ""
-            }
-            ${
-              $scope.types.length > 0
-                ? `types=${$scope.joinArrayMembers($scope.types)}&`
-                : ""
-            }
-            ${
-              $scope.subTypes.length > 0
-                ? `subtypes=${$scope.joinArrayMembers($scope.subTypes)}&`
-                : ""
-            }
-            page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`.trim()
-      );
-      searchBarService.resetDetails();
-      console.log("search");
+      // creating strings from selected checkboxes
+      $scope.selectedColorsQuery = $scope.joinArrayMembers($scope.colors);
+      $scope.selectedRaritiesQuery = $scope.joinArrayMembers($scope.rarities);
+      $scope.selectedTypesQuery = $scope.joinArrayMembers($scope.types);
+      $scope.selectedSuperTypesQuery = $scope.joinArrayMembers($scope.superTypes);
+      $scope.selectedSubTypesQuery = $scope.joinArrayMembers($scope.subTypes);
+
+      const queryParts = [
+        $scope.searchValue.length > 0 ? `&name=${$scope.searchValue}` : "",
+        $scope.selectedColorsQuery.length > 0 ? `&colors=${$scope.selectedColorsQuery}` : "",
+        $scope.selectedRaritiesQuery.length > 0 ? `&rarity=${$scope.selectedRaritiesQuery}` : "",
+        $scope.selectedTypesQuery.length > 0 ? `&type=${$scope.selectedTypesQuery}` : "",
+        $scope.selectedSuperTypesQuery.length > 0 ? `&supertypes=${$scope.selectedSuperTypesQuery}` : "",
+        $scope.selectedSubTypesQuery.length > 0 ? `&subtypes=${$scope.selectedSubTypesQuery}` : "",
+        `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`
+      ];
+      
+      // Join into one line and trim
+      const finalQuery = queryParts.join("").trim();
+      
+      searchBarService.setQuery(finalQuery);
+      
+      // searchBarService.resetDetails();
     };
   },
 });

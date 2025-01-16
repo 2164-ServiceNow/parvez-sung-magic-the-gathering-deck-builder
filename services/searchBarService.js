@@ -1,6 +1,8 @@
 angular.module('magicApp')
 	.service('searchBarService', function($rootScope){
 		this.query = "";
+		this.pageNumber = 0;
+		this.pageSize = 20;
 
 		this.setQuery = function(query){
 			this.query = query
@@ -9,6 +11,20 @@ angular.module('magicApp')
 
 		this.getQuery = function() {
 			return this.query
+		}
+
+		this.setPageNumber = function(pageNumber){
+			this.pageNumber = pageNumber
+		}
+		this.getPageNumber = function(){
+			return this.pageNumber
+		}
+
+		this.setPageSize = function(pageSize){
+			this.pageSize = pageSize
+		}
+		this.getPageSize = function(){
+			return this.pageSize
 		}
 
         this.resetDetails = function() {

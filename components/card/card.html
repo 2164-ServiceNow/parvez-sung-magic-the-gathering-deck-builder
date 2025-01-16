@@ -1,9 +1,15 @@
 <p>Query: {{searchValue}}</p>
-<div ng-if="cards.cards && cards.cards.length > 1 && cardDetails == ''">
-    <!-- <button ng-click=”previous()” ng-if=”pokemons.previous”>Previous Page</button>
-    <button ng-click=”next()” ng-if=”pokemons.next”>Next Page</button> -->
+<div ng-if="cards.cards && cards.cards.length > 1 ">
+
+    <div >
+        <button ng-if="firstPage !==''" ng-click="goToPage(firstPage)">first</button>
+        <button ng-if="previousPage!=='' && previousPage!==firstPage" ng-click="goToPage(previousPage)"> previous </button>
+        <button ng-if="nextPage!==''" ng-click="goToPage(nextPage)">next</button>
+        <button ng-if="lastPage!==''" ng-click="goToPage(lastPage)">last</button>
+    </div>
+      
     <ul>
-        <li ng-repeat="card in cards.cards" ng-if="card.imageUrl !== undefined">
+        <li ng-repeat="card in cards.cards" ng-model="cards" ng-if="card.imageUrl !== undefined">
             <button ng-click="details(card)" ng-if="card.name">{{card.name}}</button>
         </li>
     </ul>
