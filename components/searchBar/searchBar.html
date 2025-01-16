@@ -1,2 +1,60 @@
-<input ng-model="searchValue"/>
-<button ng-click='search()'>Search</button>
+<label for="searchText">Choose an option: </label>
+    <input id="searchValue" ng-model="searchValue" /> 
+<label for="cmc">CMC: </label>
+    <input id="cmc" ng-model="cmcValue" type="number" style="width: 50px;"/>
+<label for="pageSize">Results per page: </label>
+    <select id="pageSize" ng-model="pageSize" ng-init="pageSize='20'">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+
+<div id="colorOptions">
+    <!-- Select All Checkbox -->
+    <h3>Card Colors</h3>
+        <!-- Individual Color Checkboxes -->
+        <label ng-repeat="color in colors">
+            <input type="checkbox" ng-model="color.value" ng-change="toggle(colors,color.name, color.value)" /> {{ color.label }}
+        </label>
+    <br>  
+</div>
+
+<div id="rarityOptions">
+    <h3>Level of Rarity</h3>
+    <label ng-repeat="rarity in rarities">
+        <input
+            type="checkbox"
+            ng-model="rarity.value"
+            ng-change="toggle(rarities,rarity.name, rarity.value)"
+        /> {{ rarity.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="superTypeOptions">
+    <h3>Super Types</h3>
+    <label ng-repeat="superType in superTypes">
+        <input
+            type="checkbox" ng-model="superType.value" ng-change="toggle(superTypes,superType.name, superType.value)" /> {{ superType.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="typeOptions">
+    <h3>Card Types</h3>
+    <label ng-repeat="type in types">
+        <input type="checkbox" ng-model="type.value" ng-change="toggle(types,type.name, type.value)" /> {{ type.name }}
+    </label>
+    <br><br>
+</div>
+
+<div id="subTypesOptions">
+    <h3>Sub Types</h3>
+    <label ng-repeat="subType in subTypes">
+        <input type="checkbox" ng-model="subType.value" ng-change="toggle(subTypes,subType.name, subType.value)"/> {{ subType.name }}</label>
+    <br><br>
+</div>
+<button ng-click="search()">Search</button>
+
