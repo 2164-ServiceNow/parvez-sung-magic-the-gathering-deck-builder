@@ -6,6 +6,7 @@ angular.module('set', [])
 		$scope.sets = ""
         $scope.setDetails = ''
 		$scope.booster = ''
+      	$scope.cardDetails = ""
 
 		$scope.$watch(function () {
 			return searchBarService.getQuery()
@@ -36,9 +37,14 @@ angular.module('set', [])
 			});
         }
 
+		$scope.showCardDetails = function (cardDetails) {
+			$scope.cardDetails = cardDetails;
+		  };
+
         $scope.$on('resetDetails', function() {
-            $scope.setDetails = '';
-			$scope.booster = '';
+            $scope.setDetails = ''
+			$scope.booster = ''
+			$scope.cardDetails = ''
         });
 	}
 })
