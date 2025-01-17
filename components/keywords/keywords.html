@@ -1,14 +1,12 @@
-<p>Query: {{searchValue}}</p>
-<div ng-if="keywordDetails == ''">
+<!-- <searchbar></searchbar>
+<p>Query: {{searchValue}}</p> -->
+<input ng-model="selectKeyword"/>
+<button ng-click="keywordSearch()">Search</button>
+<p>Query: {{selectKeyword}}</p>
+<div>
     <ul>
-        <li>
-            <button>Keyword</button>
+        <li ng-repeat="(key, value) in keywordsObject" ng-if="!selectKeyword || key.toLowerCase().includes(selectKeyword.toLowerCase())">
+            <strong>{{key}}:</strong> {{value}}
         </li>
     </ul>
-</div>
-
-<keywords-object><keywords-object>
-
-<div>
-    <p>NOT FOUND IN DATABASE</p>
 </div>
