@@ -6,6 +6,7 @@ angular.module('set', [])
 		$scope.sets = ""
         $scope.setDetails = ''
 		$scope.booster = ''
+      	$scope.cardDetails = ""
 
 		$scope.$watch(function () {
 			return searchBarService.getQuery()
@@ -30,11 +31,20 @@ angular.module('set', [])
 				$scope.booster = response.data;
 				console.log(response.data)
 			})
+			.catch((error) => {
+				$scope.booster = 'error';
+				console.error('Error fetching booster:', error);
+			});
         }
 
+		$scope.showCardDetails = function (cardDetails) {
+			$scope.cardDetails = cardDetails;
+		  };
+
         $scope.$on('resetDetails', function() {
-            $scope.setDetails = '';
-			$scope.booster = '';
+            $scope.setDetails = ''
+			$scope.booster = ''
+			$scope.cardDetails = ''
         });
 	}
 })

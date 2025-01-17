@@ -4,7 +4,8 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListP
 .config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "pages/main.html"
+            templateUrl: "pages/cardListPage/cardListPage.html",
+            controller: "cardsCtrl"
         })
         .when("/cards", {
             templateUrl: "pages/cardListPage/cardListPage.html",
