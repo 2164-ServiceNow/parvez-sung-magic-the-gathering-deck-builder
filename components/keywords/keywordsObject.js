@@ -1,3 +1,19 @@
+angular.module('keywordsObject', [])
+
+.component('keywordsObject', {
+    templateUrl: 'components/keywords/keywordsObject.html',
+	controller: function($scope, searchBarService){
+		$scope.keywordsObject = keywordsObject
+        $scope.$watch(
+            function () {
+              return searchBarService.getQuery();
+            },
+            function (newQuery) {
+              $scope.searchValue = newQuery;
+        })
+    }
+})
+
 const keywordsObject = {
     attach: "To attach an Aura, Equipment, or Fortification to a target permanent.",
     counter: "To negate a spell or ability as it is being cast or activated, preventing it from resolving. Also refers to markers placed on permanents to track effects.",
@@ -89,7 +105,3 @@ const keywordsObject = {
     fateseal: "Look at the top x cards of an opponent's library. You may put any number of them on the bottom of their library and the rest on top of their library in any order.",
     flanking: "When a creature with flanking is blocked by a creature without flanking, the blocking creature gets -1/-1 until end of turn."
 }
-
-
-
-export default keywordsObject;
