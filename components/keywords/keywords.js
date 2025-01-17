@@ -16,10 +16,10 @@ angular.module('keywords', [])
             untap: "To return a tapped card to its upright position, making it available for use again.",
             deathtouch: "Any amount of damage dealt by a creature with deathtouch is enough to destroy the creature it damages.",
             defender: "A creature with defender cannot attack.",
-            double_strike: "A creature with double strike deals both first-strike and regular combat damage.",
+            "double strike": "A creature with double strike deals both first-strike and regular combat damage.",
             enchant: "Used on Auras to describe the type of permanent they can attach to.",
             equip: "Attaches an Equipment to a target creature you control.",
-            first_strike: "A creature with first strike deals combat damage before creatures without first strike.",
+            "first strike": "A creature with first strike deals combat damage before creatures without first strike.",
             flash: "You may cast the card at any time you could cast an instant.",
             flying: "A creature with flying can only be blocked by creatures with flying or reach.",
             haste: "A creature with haste can attack and tap the turn it enters the battlefield.",
@@ -58,9 +58,9 @@ angular.module('keywords', [])
             amplify: "As a creature with amplify enters the battlefield, it gains +1/+1 counters based on the number of revealed creature cards in hand that share its type.",
             annihilator: "When a creature with annihilator attacks, the defending player sacrifices a specified number of permanents.",
             ascend: "If a player controls ten or more permanents, they gain 'the city's blessing,' unlocking additional effects on cards with ascend.",
-            aura_swap: "Allows exchanging an Aura (with the aura swap) on the battlefield with an Aura in your hand by paying the swap cost.",
-            bands_with_other: "A limited form of banding, allowing creatures to band only with others sharing a specified quality.",
-            battle_cry: "When a creature with battle cry attacks, all other attacking creatures get +1/+0 until the end of the turn.",
+            "aura swap": "Allows exchanging an Aura (with the aura swap) on the battlefield with an Aura in your hand by paying the swap cost.",
+            "bands with other": "A limited form of banding, allowing creatures to band only with others sharing a specified quality.",
+            "battle cry": "When a creature with battle cry attacks, all other attacking creatures get +1/+0 until the end of the turn.",
             bestow: "Allows an enchantment creature to be cast as an Aura, granting its power, toughness, and abilities to a target. If the enchantment creature/Aura is no longer attached to a target, it becomes a creature.",
             bolster: "Put +1/+1 counters on the creature with the lowest toughness you control.",
             bloodthirst: "A creature with bloodthirst enters the battlefield with +1/+1 counters if an opponent was dealt damage that turn.",
@@ -72,7 +72,7 @@ angular.module('keywords', [])
             clash: "Reveal the top card of your deck and compare mana costs with an opponent. The higher cost wins and may trigger effects.",
             conspire: "Tap two untapped creatures you control of the spell's color to copy the spell, and you may choose new targets.",
             crew: "Tap creatures you control with total power at least equal to the crew cost to turn a vehicle into an artifact creature until end of turn.",
-            cumulative_upkeep: "At the beginning of your upkeep, add an age counter and pay the cumulative cost for each counter, or sacrifice the card.",
+            "cumulative upkeep": "At the beginning of your upkeep, add an age counter and pay the cumulative cost for each counter, or sacrifice the card.",
             daybound: "If it is night, transforms to day next turn if a player casts two or more spells during their turn.",
             nightbound: "If it is day, transforms to night next turn if no spells are cast during a player's turn.",
             detain: "The detained permanent cannot attack, block, or activate abilities until the start of the controller's next turn.",
@@ -95,6 +95,7 @@ angular.module('keywords', [])
             fateseal: "Look at the top x cards of an opponent's library. You may put any number of them on the bottom of their library and the rest on top of their library in any order.",
             flanking: "When a creature with flanking is blocked by a creature without flanking, the blocking creature gets -1/-1 until end of turn."
         }
+        
         // Input value
 		$scope.selectKeyword = ""
 

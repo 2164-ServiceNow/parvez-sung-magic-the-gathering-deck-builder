@@ -1,9 +1,10 @@
 <input ng-model="selectKeyword" placeholder="Search"/>
 <div>
-    <ul>
+    <ul id="keywordList">
         <!-- Display list of MTG keywords, filtered by whatever is in input selectKeyword -->
-        <li ng-repeat="(key, value) in keywordsObject" ng-if="!selectKeyword || key.toLowerCase().includes(selectKeyword.toLowerCase())">
-            <strong>{{key}}:</strong> {{value}}
+        <li class="keywordListEntry" ng-repeat="(key, value) in keywordsObject" ng-if="!selectKeyword || key.toLowerCase().includes(selectKeyword.toLowerCase())">
+            <strong>{{ key | uppercase }}</strong>
+            <br>{{ value }}
         </li>
     </ul>
 </div>
