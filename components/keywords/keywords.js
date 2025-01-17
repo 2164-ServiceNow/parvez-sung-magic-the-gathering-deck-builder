@@ -2,7 +2,8 @@ angular.module('keywords', [])
 
 .component('keywords', {
 	templateUrl: 'components/keywords/keywords.html',
-	controller: function($scope, searchBarService){
+	controller: function($scope){
+        // Full list of MTG keywords
         $scope.keywordsObject = {
             attach: "To attach an Aura, Equipment, or Fortification to a target permanent.",
             counter: "To negate a spell or ability as it is being cast or activated, preventing it from resolving. Also refers to markers placed on permanents to track effects.",
@@ -94,15 +95,10 @@ angular.module('keywords', [])
             fateseal: "Look at the top x cards of an opponent's library. You may put any number of them on the bottom of their library and the rest on top of their library in any order.",
             flanking: "When a creature with flanking is blocked by a creature without flanking, the blocking creature gets -1/-1 until end of turn."
         }
+        // Input value
 		$scope.selectKeyword = ""
 
-		// $scope.$watch(function () {
-		// 	return searchBarService.getQuery()
-		// }, function(newQuery) {
-		// 	$scope.searchValue = newQuery
-        //     console.log("find keyword " + $scope.searchValue)
-		// })
-
+        // Reset values
         $scope.$on('resetDetails', function() {
             $scope.selectKeyword = ""
         });
