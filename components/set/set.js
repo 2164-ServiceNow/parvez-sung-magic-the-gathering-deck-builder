@@ -30,6 +30,10 @@ angular.module('set', [])
 				$scope.booster = response.data;
 				console.log(response.data)
 			})
+			.catch((error) => {
+				$scope.booster = 'error';
+				console.error('Error fetching booster:', error);
+			});
         }
 
         $scope.$on('resetDetails', function() {

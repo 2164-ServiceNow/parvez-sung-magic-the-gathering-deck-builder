@@ -13,13 +13,16 @@
     <button ng-click="pullBooster(setDetails.code)" ng-if="setDetails.code">Pull Booster {{setDetails.code}}</button>
 </div>
 
-<!-- <div ng-if="booster !== ''">
+<div ng-show="booster === 'error'">
+    <p>BOOSTER UNAVAILABLE</p>
+</div>
+<div ng-if="booster !== 'error' && booster !== ''">
     <ul>
-        <li ng-repeat="card in booster.cards.cards">
-            {{card}}
+        <li ng-repeat="card in booster.cards" ng-if="card.imageUrl !== undefined">
+            <button ng-click="" ng-if="card.name">{{card.name}}</button>
         </li>
     </ul>
-</div> -->
+</div>
 
 <div ng-if="sets === undefined || 0 === sets.sets.length">
     <p>NOT FOUND IN DATABASE</p>
