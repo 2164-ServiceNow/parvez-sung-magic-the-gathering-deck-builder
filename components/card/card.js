@@ -3,8 +3,8 @@ angular
 
   .component("card", {
     templateUrl: "components/card/card.html",
-    controller: function ($scope, $http,searchService) {
-      $scope.cards = searchService.getCards(searchBarService.getQuery());
+    controller: function ($scope, $http, searchService) {
+      $scope.cards = [];
       $scope.cardDetails = "";
       $scope.pageLink= "";
       $scope.count=0;
@@ -15,30 +15,63 @@ angular
       $scope.pageNumber=1;
       $scope.pages = [];
 
-      $scope.watch(
-        function() {
-          searchService.setQuery(`&page=${$scope.currentPage}&pageSize=${$scope.pageSize}`);
+      
+
+      $scope.$watch(
+        function () {
           return searchService.getQuery();
         },
-        function(newQuery) {
-          $scope.searchValue = newQuery;
-          $scope.cards = searchService.getCards(newQuery);
-          $scope.pages = searchService.getPages();
+        async function (newQuery) {
+          if (newQuery) {
+            try {
+              $scope.cards = await searchService.getCards(newQuery); // Await the resolved data
+                
+              
+            } catch (error) {
+              console.error("Failed to fetch cards:", error);
+            }
+          }
         }
       );
-      $scope.$watch(
-        function(){
-          return searchService.getQuery();
-        }, function (newQuery) {
-          $scope.cards = searchService.getCards(newQuery);
-            });
-       
-      $scope.init = function() {
-        console.log("Initiating card component");
-        $scope.cards = searchService.getCards(searchService.getQuery());
-      };
+      
+      
 
-      $scope.init();
+      // $scope.$watch(
+      //   function(){
+      //     return searchService.getQuery();
+      //   }, function (newQuery) {
+      //     $http.get(`https://api.magicthegathering.io/v1/cards?${newQuery}`)
+      //     .then((response) => {
+      //       $scope.cards = response.data;
+      //       $scope.getHeaders(response);
+      //     });
+      //   }
+      // );
+        
+
+      // $scope.fetchCards = async function () {
+      //   try {
+      //     $scope.cards = await searchService.getCards();
+      //     console.log("Cards fetched:", $scope.cards);
+      //   } catch (error) {
+      //     console.error("Failed to fetch cards:", error);
+      //   }
+      // };
+
+      //  // Initialize component
+      //  $scope.init = function () {
+      //   console.log("Initializing card component");
+
+      //   // Set default query in the service
+      //   searchService.setQuery(`&page=${$scope.currentPage}&pageSize=${$scope.pageSize}`);
+
+      //   // Fetch cards during initialization
+      //   $scope.fetchCards();
+      // };
+
+      // Call the init function on controller load
+      
+     
       /*
       $scope.$watch(
         function () {
@@ -113,7 +146,7 @@ angular
       $scope.getPage = function(pageNumber) {
         $scope.currentPage = pageNumber;
         searchService.setPageNumber(pageNumber);
-        $scope.cards = searchService.getCards(searchBarService.getQuery());
+        $scope.cards = searchService.getCards(searchService.getQuery());
       }
 
       $scope.goToPage = function(pageLink){

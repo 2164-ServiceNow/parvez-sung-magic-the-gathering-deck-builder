@@ -3,14 +3,11 @@
     <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
         <div class="col-12">
             <label for="searchText" class="form-label">Choose Options</label>
-            <input type="text" class="form-control" id="searchValue" ng-model="searchValue" placeholder="Type what you are looking for...."
-            focus="data-bs-toggle: collapse"
-             data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" 
-            aria-controls="panelsStayOpen-collapseOne">
+            <input type="text" class="form-control" id="searchValue" ng-model="searchValue" placeholder="Type what you are looking for...." />
         </div>
         <div class="col-12">
             <label for="cmc" class="form-label">CMC</label>
-            <input type="number" class="form-control" id="cmc" ng-model="cmcValue">
+            <input type="number" class="form-control" id="cmc" ng-model="cmcValue" />
         </div>
         <div class="col-12 align-items-top">
             <label for="pageSize" class="form-label">Page Size</label>
@@ -94,6 +91,113 @@
         </div>
         
       </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<!-- 
+
+<div class="container-lg">
+
+    <div class="row mb-3">
+        <div class="col-4">
+            <label for="searchText" class="form-label">Choose Options</label>
+            <input type="text" class="form-control" id="searchValue" ng-model="searchValue" placeholder="Type what you are looking for....">
+        </div>
+        <div class="col-1">
+            <label for="cmc" class="form-label">CMC</label>
+            <input type="number" class="form-control" id="cmc" ng-model="cmcValue">
+        </div>
+        <div class="col-1">
+            <label for="pageSize" class="form-label">Page Size</label>
+        <select class="form-select" aria-label="Results Per Page" id="pageSize" d="pageSize" ng-model="pageSize" ng-init="pageSize='20'" ng-change="search()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        </div>
+        <div class="col-4">
+            <div>
+                <label for="checkbokes" class="form-label">Card Colors</label>
+            </div>
+            <div id="checkbokes" ng-repeat="color in colors" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="color.label" ng-model="color.value" ng-change="toggle(colors,color.name, color.value)" />
+                <label class="form-check-label" for="color.label">{{color.label}}</label>
+            </div>  
+            
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <div>
+                <label for="raritiesCheckboxes" class="form-label">Rarity </label>
+            </div>
+            <div id="raritiesCheckboxes" ng-repeat="rarity in rarities" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="rarity.name" ng-model="rarity.value" ng-change="toggle(rarities, rarity.name, rarity.value)" />
+                <label class="form-check-label" for="rarity.name">{{rarity.label}}</label>
+            </div>  
+            
+        </div> 
+        <div class="col-3">
+            <div>
+            <label for="superTypesCheckboxes" class="form-label">Super Types</label>
+            </div>
+            <div id="superTypesCheckboxes" ng-repeat="superType in superTypes" class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="superType.name" ng-model="superType.value" ng-change="toggle(superTypes, superType.name, superType.value)" />
+            <label class="form-check-label" for="superType.name">{{superType.label}}</label>
+            </div>  
+        </div>
+        <div class="col-3">
+            <div>
+            <label for="typesCheckboxes" class="form-label">Card Types</label>
+            </div>
+            <div id="typesCheckboxes" ng-repeat="type in types" class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="type.name" ng-model="type.value" ng-change="toggle(types, type.name, type.value)" />
+            <label class="form-check-label" for="type.name">{{type.label}}</label>
+            </div>  
+        </div>
+        <div class="col-3">
+            <div>
+            <label for="subTypesCheckboxes" class="form-label">Sub Types</label>
+            </div>
+            <div id="subTypesCheckboxes" ng-repeat="subType in subTypes" class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="subType.name" ng-model="subType.value" ng-change="toggle(subTypes, subType.name, subType.value)" />
+            <label class="form-check-label" for="subType.name">{{subType.label}}</label>
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+
+    
+
 
 
 
