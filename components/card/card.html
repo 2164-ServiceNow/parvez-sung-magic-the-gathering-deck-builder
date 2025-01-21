@@ -1,27 +1,74 @@
-<p>Query: {{searchValue}}</p>
-<div ng-if="cards.cards && cards.cards.length > 1 ">
+<div class="container-lg">
+  
+  
+  
 
-    <div >
-        <button ng-if="firstPage !==''" ng-click="goToPage(firstPage)">first</button>
-        <button ng-if="previousPage!=='' && previousPage!==firstPage" ng-click="goToPage(previousPage)"> previous </button>
-        <button ng-if="nextPage!==''" ng-click="goToPage(nextPage)">next</button>
-        <button ng-if="lastPage!==''" ng-click="goToPage(lastPage)">last</button>
+    <div class="container my-4">
+      <div class="d-flex flex-wrap justify-content-center m-2">
+      <div ng-if="cards.cards && cards.cards.length > 1 ">
+        <div>
+          <button class="btn btn-primary" ng-if="firstPage !==''" ng-click="goToPage(firstPage)">
+            first
+          </button>
+          <button class="btn btn-primary"
+            ng-if="previousPage!=='' && previousPage!==firstPage"
+            ng-click="goToPage(previousPage)"
+          >
+            previous
+          </button>
+          <button class="btn btn-primary" ng-if="nextPage!==''" ng-click="goToPage(nextPage)">next</button>
+          <button class="btn btn-primary" ng-if="lastPage!==''" ng-click="goToPage(lastPage)">last</button>
+        </div>
+        </div>
+        <br /><br />
+      <div class="d-flex flex-wrap justify-content-start">
+        <div
+          class="card m-2"
+          ng-repeat="card in cards.cards"
+          ng-model="cards"
+          style="width: 18rem"
+        >
+            <img ng-src="{{card.imageUrl || imgPlaceHolder}}" class="" alt="Card image" />
+          <div class="card-body">
+            <h5 class="card-title">{{card.name}}</h5>
+            <p class="card-text">{{card.text}}</p>
+            <a href="#" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
     </div>
-      
-    <ul>
-        <li ng-repeat="card in cards.cards" ng-model="cards" ng-if="card.imageUrl !== undefined">
-            <button ng-click="details(card)" ng-if="card.name">{{card.name}}</button>
-        </li>
-    </ul>
-</div>
+  </div>
 
-<div ng-if="cardDetails !== ''">
+  <!-- <div ng-if="cardDetails !== ''">
     <p>{{cardDetails.name}}</p>
     <p>{{cardDetails.manaCost}}</p>
     <img ng-src="{{cardDetails.imageUrl}}" alt="{{cardDetails.name}}"/>
     <p>{{cardDetails.text}}</p>
-</div>
+</div> -->
 
-<div ng-if="cards === undefined || 1 >= cards.cards.length">
+  <div ng-if="cards === undefined || 1 >= cards.cards.length">
     <p>NOT FOUND IN DATABASE</p>
+  </div>
 </div>
+<!-- <div ng-repeat="card in cards.cards" ng-model="cards" class="card mb-3" style="max-width: 800px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{card.imageUrl}}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{card.name}}</h5>
+                  <p class="card-text">{{card.originalText}}</p>
+                  <p class="card-text">{{card.flavor}}</p>
+                  <h5 class="card-title">Power: {{card.power}}</h5>
+                  <p class="card-text">Super Type: {{card.superTypes}}, Card Type: {{card.type}}, Sub Type: {{card.subTypes}}</p>
+                  <p class="card-text">Rarity: {{card.rarity}}</p>
+                  <p class="card-text">CMC: {{card.cmc}}</p>
+                  <p class="card-text">Mana Cost: {{card.manaCost}}</p>
+                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+<!-- <li ng-repeat="card in cards.cards" ng-model="cards" ng-if="card.imageUrl !== undefined"> -->
