@@ -106,6 +106,7 @@ angular.module('deck', [])
                     const deck = JSON.parse(e.target.result)
                     if (deck.name && deck.color && deck.cards) {
                         $scope.createDeck(deck.name, deck.color, deck.cards)
+                        $scope.clearDeckScope()
                         $scope.$apply()
                         console.log("Deck uploaded.")
                     } else {
