@@ -1,15 +1,19 @@
 <div>
     <input ng-model="newDeckName" placeholder="New Deck"/>
     <button ng-click='createDeck()'>Create Deck</button>
+    <label for="uploadDeckJSON" id="uploadDeckJSONLabel">Upload Deck</label> <!--click to upload deck JSON-->
+    <input type="file" accept=".json" id="uploadDeckJSON"/> 
 </div>
 <div>
-    <button ng-click="clearDecks()">Clear All Decks</button>
+    <button ng-click="clearDecks()">Clear All Decks</button> <!--remove decks from localStorage-->
 </div>
 <div>
+    <!--Rename deck-->
     <input ng-model="renameSelectDeckName" placeholder="Enter new name" ng-show="selectedDeck !== ''"/>
     <button ng-click='renameSelectDeck()' ng-show="selectedDeck !== ''">Rename Deck</button>       
 </div>
 
+<!--Deck List-->
 <div ng-if="decks.length !== 0 && selectedDeck === ''">
     <ul>
         <li ng-repeat="(index, deck) in decks track by $index">
@@ -18,15 +22,18 @@
     </ul>
 </div>
 <div ng-if="selectedDeck !== ''">
+    <!--Selected Deck Details-->
     <div>
-        <button ng-click="clearSelectDeck()">Return</button>
+        <button ng-click="clearDeckScope()">Return</button>
     </div>
     <button ng-click="createDeck('Copy of ' + selectedDeck.name, selectedDeck.color, selectedDeck.cards)">Copy Deck</button>
     <div>{{selectedDeck.name}}</div>
     <div>{{selectedDeck.color}}</div>
     <div>{{selectedDeck.cards}}</div>
+    <button ng-click="downloadDeckJSON()">Download</button>
     <button ng-click="deleteSelectDeck()">Delete</button>
 </div>
+<!--No decks saved-->
 <div ng-if="decks.length === 0">
     <p> NO DECKS SAVED</p>
 </div>
