@@ -30,4 +30,6 @@ angular.module('magicApp')
         this.resetDetails = function() {
             $rootScope.$broadcast("resetDetails");
         };
+
+		
 	})

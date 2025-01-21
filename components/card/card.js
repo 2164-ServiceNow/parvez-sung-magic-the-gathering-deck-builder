@@ -8,6 +8,8 @@ angular
       $scope.cardDetails = "";
       $scope.pageLink= "";
       $scope.currentPage = "";
+      $scope.imgPlaceHolder="images/placeholderCard.jpg";
+      $scope.modalCard = [];
 
       $scope.$watch(
         function () {
@@ -21,6 +23,7 @@ angular
             .get(`https://api.magicthegathering.io/v1/cards?${newQuery}`)
             .then((response) => {
               $scope.cards = response.data;
+              console.log($scope.cards);
               $scope.parseLinkHeader(response.headers('Link'));
             });
         }
@@ -72,6 +75,11 @@ angular
               $scope.cards = response.data;
               $scope.parseLinkHeader(response.headers('Link'));
             });
+      }
+
+      $scope.cardDetails= function(card){
+        $scope.modalCard = card;
+
       }
       
 

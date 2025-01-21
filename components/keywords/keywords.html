@@ -1,10 +1,21 @@
-<input style="margin-left: 20%; width: 50%; height: 30px; font-size: 20px;" ng-model="selectKeyword" placeholder="Search keyword"/>
-<div>
-    <ul id="keywordList">
-        <!-- Display list of MTG keywords, filtered by whatever is in input selectKeyword -->
-        <li class="keywordListEntry" ng-repeat="(key, value) in keywordsObject" ng-if="!selectKeyword || key.toLowerCase().includes(selectKeyword.toLowerCase())">
-            <strong>{{ key | uppercase }}</strong>
-            <br>{{ value }}
-        </li>
-    </ul>
+<div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+    <!-- Input for searchValue -->
+    <div class="row flex-grow-1 mb-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="selectKeyword" 
+        ng-model="selectKeyword" 
+        placeholder="Type your keyword here...." />
+    </div>
+    <br><br>
+    <div class="row">
+        <ul id="keywordList">
+            <!-- Display list of MTG keywords, filtered by whatever is in input selectKeyword -->
+            <li class="keywordListEntry" ng-repeat="(key, value) in keywordsObject" ng-if="!selectKeyword || key.toLowerCase().includes(selectKeyword.toLowerCase())">
+                <strong>{{ key | uppercase }}</strong>
+                <br>{{ value }}
+            </li>
+        </ul>
+    </div>
 </div>
