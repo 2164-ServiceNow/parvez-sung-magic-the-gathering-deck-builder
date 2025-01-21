@@ -3,12 +3,43 @@ angular
 
   .component("card", {
     templateUrl: "components/card/card.html",
-    controller: function ($scope, $http, searchBarService) {
-      $scope.cards = "";
+    controller: function ($scope, $http,searchService) {
+      $scope.cards = searchService.getCards(searchBarService.getQuery());
       $scope.cardDetails = "";
       $scope.pageLink= "";
-      $scope.currentPage = "";
+      $scope.count=0;
+      $scope.totalCount=0;
+      $scope.pageSize = 20;
+      $scope.currentPage=1;
+      $scope.totalPagenumbers = 0;
+      $scope.pageNumber=1;
+      $scope.pages = [];
 
+      $scope.watch(
+        function() {
+          searchService.setQuery(`&page=${$scope.currentPage}&pageSize=${$scope.pageSize}`);
+          return searchService.getQuery();
+        },
+        function(newQuery) {
+          $scope.searchValue = newQuery;
+          $scope.cards = searchService.getCards(newQuery);
+          $scope.pages = searchService.getPages();
+        }
+      );
+      $scope.$watch(
+        function(){
+          return searchService.getQuery();
+        }, function (newQuery) {
+          $scope.cards = searchService.getCards(newQuery);
+            });
+       
+      $scope.init = function() {
+        console.log("Initiating card component");
+        $scope.cards = searchService.getCards(searchService.getQuery());
+      };
+
+      $scope.init();
+      /*
       $scope.$watch(
         function () {
           return searchBarService.getQuery();
@@ -21,10 +52,21 @@ angular
             .get(`https://api.magicthegathering.io/v1/cards?${newQuery}`)
             .then((response) => {
               $scope.cards = response.data;
-              $scope.parseLinkHeader(response.headers('Link'));
+              $scope.getHeaders(response);
+              
             });
         }
-      );
+      );*/
+
+      $scope.getHeaders = function(response) {
+        $scope.parseLinkHeader(response.headers('Link'));
+        $scope.count(response.headers('Count'));
+        $scope.totalCount(response.headers('Total-Count'));
+        $scope.totalPagenumbers = ($scope.totalCount/$scope.pageSize)+1;
+        searchService.setTotalPages($scope.totalPagenumbers);
+          
+
+      }
 
       $scope.details = function (cardDetails) {
         $scope.cardDetails = cardDetails;
@@ -59,6 +101,21 @@ angular
         return links;
       }
 
+      $scope.gotToPageNumber = function(pageNumber) {
+        $http
+          .get(`https://api.magicthegathering.io/v1/cards?${$scope.searchValue}&page=${pageNumber}`)
+          .then((response) => {
+            $scope.cards = response.data;
+            // $scope.getHeaders(response);
+          });
+      }
+
+      $scope.getPage = function(pageNumber) {
+        $scope.currentPage = pageNumber;
+        searchService.setPageNumber(pageNumber);
+        $scope.cards = searchService.getCards(searchBarService.getQuery());
+      }
+
       $scope.goToPage = function(pageLink){
         if(!pageLink) return;
         $scope.firstPage='';
@@ -70,49 +127,9 @@ angular
             .get(pageLink)
             .then((response) => {
               $scope.cards = response.data;
-              $scope.parseLinkHeader(response.headers('Link'));
+              $scope.getHeaders(response);
             });
       }
-      
-
-      // $scope.next = function() {
-      // 	$http.get(`${$scope.cards.next}`) 	// $http.post(‘<api-url>’,  <data here>) `…/?offset=$(80)&limit=${20}`
-      // 	.then((response) => {
-      // 		$scope.cards = response.data;
-      // 		console.log($scope.cards)
-      // 	})
-      // }
-
-      // $scope.previous = function() {
-      // 	$http.get(`${$scope.cards.next}`) 	// $http.post(‘<api-url>’, <data here>)
-      // 	.then((response) => {
-      // 		$scope.cards = response.data;
-      // 		console.log($scope.cards)
-      // 	})
-      // }
-   
-    // $scope.next = function() {
-    //     searchBarService.setPageNumber(searchBarService.getPageNumber() + 1);
-    //     const nextQuery = searchBarService.getQuery();
-    //     $http
-    //         .get(`https://api.magicthegathering.io/v1/cards?${nextQuery}`)
-    //         .then((response) => {
-    //           $scope.cards = response.data;
-    //           console.log($scope.cards);
-    //         });
-      
-    // };
-
-    // $scope.previous = function() {
-    //   searchBarService.setPageNumber(searchBarService.getPageNumber() - 1);
-    //     const previousQuery = searchBarService.getQuery();
-    //     $http
-    //         .get(`https://api.magicthegathering.io/v1/cards?${previousQuery}`)
-    //         .then((response) => {
-    //           $scope.cards = response.data;
-    //           console.log($scope.cards);
-    //         });
-    //       }
     },
   });
  

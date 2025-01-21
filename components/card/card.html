@@ -1,18 +1,41 @@
 <p>Query: {{searchValue}}</p>
-<div ng-if="cards.cards && cards.cards.length > 1 ">
+<div ng-if="cards && cards.length > 1 ">
 
-    <div >
+    <!-- <div >
         <button ng-if="firstPage !==''" ng-click="goToPage(firstPage)">first</button>
         <button ng-if="previousPage!=='' && previousPage!==firstPage" ng-click="goToPage(previousPage)"> previous </button>
         <button ng-if="nextPage!==''" ng-click="goToPage(nextPage)">next</button>
         <button ng-if="lastPage!==''" ng-click="goToPage(lastPage)">last</button>
-    </div>
-      
-    <ul>
-        <li ng-repeat="card in cards.cards" ng-model="cards" ng-if="card.imageUrl !== undefined">
-            <button ng-click="details(card)" ng-if="card.name">{{card.name}}</button>
-        </li>
+    </div> -->
+
+
+
+
+<nav aria-label="...">
+    <ul class="pagination">
+      <!-- <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li> -->
+      <li ng-repeat="pageNumber in PageNumbers">
+        <a ng-click="getPage(pageNumber)">{{pageNumber}}</a>
+      </li>
+
+      <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li> -->
     </ul>
+    </nav>
+      
+    <li ng-repeat="card in cards" ng-model="cards" ng-if="card.imageUrl !== undefined">
+          <ul>
+          <button ng-click="details(card)" ng-if="card.name">{{card.name}}</button>
+      </li>
+  </ul>
 </div>
 
 <div ng-if="cardDetails !== ''">
