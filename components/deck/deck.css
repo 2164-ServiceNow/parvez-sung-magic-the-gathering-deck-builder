@@ -1,0 +1,22 @@
+#uploadDeckJSON {
+    display: none;
+}
+
+#uploadDeckJSONLabel {
+    display: inline-block;
+    background-color: white;
+    padding: 5px 10px;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#uploadDeckJSONLabel:hover {
+    background-color: green;
+    color: white;
+}
+
+/* Remove "No file chosen" text */
+#uploadDeckJSONLabel::-webkit-file-upload-button {
+    display: none;
+}
