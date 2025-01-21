@@ -5,8 +5,11 @@
 
     <div class="container my-4">
       <div class="d-flex flex-wrap justify-content-center m-2">
-      <div ng-if="cards.cards && cards.cards.length > 1 ">
-        <div>
+      
+      <div idng-if="cards.cards && cards.cards.length > 1 ">
+        
+        <div id="pages">
+          <label for="pages" class="form-label">Pages </label>
           <button class="btn btn-primary" ng-if="firstPage !==''" ng-click="goToPage(firstPage)">
             first
           </button>
@@ -32,43 +35,65 @@
           <div class="card-body">
             <h5 class="card-title">{{card.name}}</h5>
             <p class="card-text">{{card.text}}</p>
-            <a href="#" class="btn btn-primary">Details</a>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal" ng-click="cardDetails(card)">Details</button>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <div ng-if="cardDetails !== ''">
-    <p>{{cardDetails.name}}</p>
-    <p>{{cardDetails.manaCost}}</p>
-    <img ng-src="{{cardDetails.imageUrl}}" alt="{{cardDetails.name}}"/>
-    <p>{{cardDetails.text}}</p>
-</div> -->
-
+<!-- div to show if there are not cards matching the search -->
   <div ng-if="cards === undefined || 1 >= cards.cards.length">
     <p>NOT FOUND IN DATABASE</p>
   </div>
 </div>
-<!-- <div ng-repeat="card in cards.cards" ng-model="cards" class="card mb-3" style="max-width: 800px;">
+
+<!-- Modal for Card Details -->
+  <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="cardModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardModalLabel">{{modalCard.name}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <!-- Cards List -->
+          
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="{{card.imageUrl}}" class="img-fluid rounded-start" alt="...">
+                <img src="{{modalCard.imageUrl || imgPlaceHolder}}" class="img-fluid rounded-start" alt="{{card.name}}">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{card.name}}</h5>
-                  <p class="card-text">{{card.originalText}}</p>
-                  <p class="card-text">{{card.flavor}}</p>
-                  <h5 class="card-title">Power: {{card.power}}</h5>
-                  <p class="card-text">Super Type: {{card.superTypes}}, Card Type: {{card.type}}, Sub Type: {{card.subTypes}}</p>
-                  <p class="card-text">Rarity: {{card.rarity}}</p>
-                  <p class="card-text">CMC: {{card.cmc}}</p>
-                  <p class="card-text">Mana Cost: {{card.manaCost}}</p>
-                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                  <h5 class="card-title">{{modalCard.name}}</h5>
+                  <p class="card-text">{{modalCard.originalText}}</p>
+                  <p class="card-text">{{modalCard.flavor}}</p>
+                  <h5 class="card-title">Power: {{modalCard.power}}</h5>
+                  <p class="card-text">
+                    Super Type: {{modalCard.superTypes}}, Card Type: {{modalCard.type}}, Sub Type: {{modalCard.subTypes}}
+                  </p>
+                  <p class="card-text">Rarity: {{modalCard.rarity}}</p>
+                  <p class="card-text">CMC: {{modalCard.cmc}}</p>
+                  <p class="card-text">Mana Cost: {{modalCard.manaCost}}</p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">Last updated 3 mins ago</small>
+                  </p>
                 </div>
               </div>
             </div>
-          </div> -->
-
-<!-- <li ng-repeat="card in cards.cards" ng-model="cards" ng-if="card.imageUrl !== undefined"> -->
+          
+          <!-- End of Cards List -->
+        </div>
+  
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

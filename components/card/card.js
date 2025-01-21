@@ -9,6 +9,7 @@ angular
       $scope.pageLink= "";
       $scope.currentPage = "";
       $scope.imgPlaceHolder="images/placeholderCard.jpg";
+      $scope.modalCard = [];
 
       $scope.$watch(
         function () {
@@ -74,6 +75,11 @@ angular
               $scope.cards = response.data;
               $scope.parseLinkHeader(response.headers('Link'));
             });
+      }
+
+      $scope.cardDetails= function(card){
+        $scope.modalCard = card;
+
       }
       
 
