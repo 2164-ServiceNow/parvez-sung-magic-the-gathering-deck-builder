@@ -3,6 +3,15 @@ angular.module('magicApp')
 		this.query = "";
 		this.pageNumber = 0;
 		this.pageSize = 20;
+		this.searchOption = "card";
+
+		this.getSearchOption = function(){
+			return this.searchOption;
+		}
+
+		this.setSearchOption = function(searchOption){
+			this.searchOption = searchOption;
+		}
 
 		this.setQuery = function(query){
 			this.query = query

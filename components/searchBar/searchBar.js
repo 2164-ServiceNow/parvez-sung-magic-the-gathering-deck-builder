@@ -1,13 +1,16 @@
 angular.module("searchBar", []).component("searchbar", {
   templateUrl: "components/searchBar/searchBar.html",
   controller: function SearchBarCtrl($scope, searchBarService) {
-        
+    $scope.searchoption = "card";
+
     $scope.searchValue = ""; // ng-model, default for search value
     $scope.pageNumber = 1; // default for page number
     $scope.pageSize = 20; // default for number of cards per page
     $scope.cmcValue = 1; // variable from cummulatie mana cost
 
-    searchBarService.setQuery(`&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`);
+    searchBarService.setQuery(
+      `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`
+    );
     // Color selection goes here
     $scope.selectedColors = []; //selects colors in the search
 
@@ -116,31 +119,39 @@ angular.module("searchBar", []).component("searchbar", {
     });
 
     // function to join result of checbox arrays into a string
-    $scope.joinArrayMembers = function (array, key = "value",nameKey = "name") {
+    $scope.joinArrayMembers = function (
+      array,
+      key = "value",
+      nameKey = "name"
+    ) {
       return array
-        .filter((item)=>item.name !== "selectAll") // Filter out selectAll
+        .filter((item) => item.name !== "selectAll") // Filter out selectAll
         .filter((item) => item[key]) // Filter where key is true
         .map((item) => item[nameKey]) // Extract names using nameKey
         .join(","); // Join with commas
     };
-    
+
     // function to toggle checkboxes
-    $scope.toggle = function(array, name, value){
+    $scope.toggle = function (array, name, value) {
       console.log(array);
-      if(name ==="selectAll" && value === true){
-            array.forEach((item) => {
-            item.value = true;
-          });
-      } else if(name ==="selectAll" && value === false) {
-          array.forEach((item) => {
+      if (name === "selectAll" && value === true) {
+        array.forEach((item) => {
+          item.value = true;
+        });
+      } else if (name === "selectAll" && value === false) {
+        array.forEach((item) => {
           item.value = false;
         });
-      } else if(name !== "selectAll" && value === false){
+      } else if (name !== "selectAll" && value === false) {
         array[0].value = false;
       } else {
-        array.filter((item) => item.name !== "selectAll").every((item) => item.value === true) ? array[0].value = true : array[0].value = false;
+        array
+          .filter((item) => item.name !== "selectAll")
+          .every((item) => item.value === true)
+          ? (array[0].value = true)
+          : (array[0].value = false);
       }
-    }    
+    };
 
     // The Search Function
     $scope.search = function () {
@@ -148,25 +159,46 @@ angular.module("searchBar", []).component("searchbar", {
       $scope.selectedColorsQuery = $scope.joinArrayMembers($scope.colors);
       $scope.selectedRaritiesQuery = $scope.joinArrayMembers($scope.rarities);
       $scope.selectedTypesQuery = $scope.joinArrayMembers($scope.types);
-      $scope.selectedSuperTypesQuery = $scope.joinArrayMembers($scope.superTypes);
+      $scope.selectedSuperTypesQuery = $scope.joinArrayMembers(
+        $scope.superTypes
+      );
       $scope.selectedSubTypesQuery = $scope.joinArrayMembers($scope.subTypes);
 
       const queryParts = [
         $scope.searchValue.length > 0 ? `&name=${$scope.searchValue}` : "",
-        $scope.selectedColorsQuery.length > 0 ? `&colors=${$scope.selectedColorsQuery}` : "",
-        $scope.selectedRaritiesQuery.length > 0 ? `&rarity=${$scope.selectedRaritiesQuery}` : "",
-        $scope.selectedTypesQuery.length > 0 ? `&type=${$scope.selectedTypesQuery}` : "",
-        $scope.selectedSuperTypesQuery.length > 0 ? `&supertypes=${$scope.selectedSuperTypesQuery}` : "",
-        $scope.selectedSubTypesQuery.length > 0 ? `&subtypes=${$scope.selectedSubTypesQuery}` : "",
-        `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`
+        $scope.selectedColorsQuery.length > 0
+          ? `&colors=${$scope.selectedColorsQuery}`
+          : "",
+        $scope.selectedRaritiesQuery.length > 0
+          ? `&rarity=${$scope.selectedRaritiesQuery}`
+          : "",
+        $scope.selectedTypesQuery.length > 0
+          ? `&type=${$scope.selectedTypesQuery}`
+          : "",
+        $scope.selectedSuperTypesQuery.length > 0
+          ? `&supertypes=${$scope.selectedSuperTypesQuery}`
+          : "",
+        $scope.selectedSubTypesQuery.length > 0
+          ? `&subtypes=${$scope.selectedSubTypesQuery}`
+          : "",
+        `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`,
       ];
-      
+
       // Join into one line and trim
       const finalQuery = queryParts.join("").trim();
-      
+
       searchBarService.setQuery(finalQuery);
-      
+
       // searchBarService.resetDetails();
     };
+
+    $scope.$watch(
+      function () {
+        return searchBarService.getSearchOption();
+      },
+      function (searchOption) {
+        $scope.searchoption = searchOption;
+      }
+    );
   },
 });
