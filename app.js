@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'keywordListPage',
-    'searchBar', 'card', 'set', 'deck', 'keywords','navbar'])
+    'searchBar', 'card', 'set', 'deck', 'keywords','navbar', 'cardModal'])
 .config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
