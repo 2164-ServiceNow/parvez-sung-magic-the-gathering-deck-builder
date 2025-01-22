@@ -2,7 +2,7 @@ angular.module('deck', [])
 
 .component('deck', {
 	templateUrl: 'components/deck/deck.html',
-	controller: function($scope, $window){
+	controller: function($scope, $window, cardModalService){
 		$scope.decks = JSON.parse($window.localStorage.getItem('decks')) || [] // Grab deck object list from localStorage, else empty array
         $scope.newDeckName = "New Deck" // user text input for created deck's name
         $scope.renameSelectDeckName = "" // user text input for renaming deck's name
@@ -126,5 +126,10 @@ angular.module('deck', [])
 
             reader.readAsText(deckFile)
         })
+
+        $scope.setCardDetails = function(card) {
+            console.log(card)
+            cardModalService.setCard(card)
+        }
 	}
 })
