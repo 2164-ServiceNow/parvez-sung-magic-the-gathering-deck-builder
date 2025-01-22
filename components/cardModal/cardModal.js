@@ -3,7 +3,7 @@ angular
 
   .component("cardModal", {
     templateUrl: "components/cardModal/cardModal.html",
-    controller: function ($scope, deckService, cardModalService) {
+    controller: function ($scope, $rootScope, deckService, cardModalService) {
         $scope.decks = deckService.getDecks() || []
         $scope.imgPlaceHolder = "images/placeholderCard.jpg";
         $scope.$watch(
@@ -23,7 +23,7 @@ angular
             deckService.addToDeck(card, index)
             $scope.decks = deckService.getDecks() || []
             console.log(`Modal Adding card to deck: ${deckService.getDecks()}`)
-            $scope.apply
+            $scope.broadcastDecksChange()
         }
 
         $scope.setDeckIndex=function(index){
@@ -31,6 +31,10 @@ angular
                 return
             }
             $scope.deckIndex = index
+        }
+
+        $scope.broadcastDecksChange = function() {
+            $rootScope.$broadcast("decksChange");
         }
     }
 })

@@ -2,12 +2,12 @@ angular.module('deck', [])
 
 .component('deck', {
 	templateUrl: 'components/deck/deck.html',
-	controller: function($scope, $window, cardModalService){
+	controller: function($scope, $rootScope, $window, deckService, cardModalService){
 		$scope.decks = JSON.parse($window.localStorage.getItem('decks')) || [] // Grab deck object list from localStorage, else empty array
         $scope.newDeckName = "New Deck" // user text input for created deck's name
         $scope.renameSelectDeckName = "" // user text input for renaming deck's name
         $scope.selectedDeck = '' // object that holds the selected decks details
-        $scope.selectedDeckIndex = null // where the selected deck is in the storage array
+        $scope.selectedDeckIndex = null // where the selected deck is in the storage array'
 
         // Saves decks array to localStorage
         function saveDecks() {
@@ -18,7 +18,7 @@ angular.module('deck', [])
         $scope.createDeck = function(name = "", color = "colorless", cards = []) {
             $scope.newDeckName = $scope.newDeckName.trim()
             name = name || $scope.newDeckName || "New Deck"
-            color = color || "colorless"
+            color = color || ["colorless"]
             cards = cards || []
 
             const newDeck = {
@@ -131,5 +131,19 @@ angular.module('deck', [])
             console.log(card)
             cardModalService.setCard(card)
         }
+
+        $scope.removeFromDeck = function(index) {
+            console.log("Index " + index)
+            console.log("Deck Index " + $scope.selectedDeckIndex)
+            deckService.removeFromDeck(index, $scope.selectedDeckIndex)
+            $scope.decks = JSON.parse($window.localStorage.getItem('decks'))
+            $scope.selectedDeck = $scope.decks[$scope.selectedDeckIndex]
+        }
+
+        $rootScope.$on('decksChange', function() {
+            console.log('Event received:')
+            $scope.decks = JSON.parse($window.localStorage.getItem('decks'))
+            $scope.selectedDeck = $scope.decks[$scope.selectedDeckIndex]
+        });
 	}
 })
