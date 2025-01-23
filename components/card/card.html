@@ -36,38 +36,15 @@
       </div>
       <br /><br />
       <div class="d-flex flex-wrap justify-content-start">
-        <div
-          class="card m-2"
+        <bootstrap-card
           ng-repeat="card in cards.cards"
-          ng-model="cards"
-          style="width: 18rem"
-        >
-          <img
-            ng-src="{{card.imageUrl || imgPlaceHolder}}"
-            class=""
-            alt="Card image"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{card.name}}</h5>
-            <p class="card-text">{{card.text}}</p>
-            <button
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#cardModal"
-              ng-click="cardDetails(card)"
-            >
-              Details
-            </button>
-            <button
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#cardModal1"
-              ng-click="openAddToDeckModal(card)"
-            >
-              Add to Deck
-            </button>
-          </div>
-        </div>
+          card="card"
+          img-placeholder="{{imgPlaceHolder}}"
+          on-details="cardDetails(card)"
+          on-add-to-deck="openAddToDeckModal(card)"
+          on-favorites="addtoFav(card)"
+          card-display-type="cards"
+        ></bootstrap-card>
       </div>
     </div>
   </div>
@@ -146,7 +123,13 @@
   </div>
 </div>
 
-<!-- Modal for Card Details -->
+<add-to-deck-modal
+  modal-card="modalCard"
+  decks="decks"
+  on-add-to-deck="addToDeck(card, index)"
+></add-to-deck-modal>
+
+<!-- Modal for Card Details
 <div
   class="modal fade"
   id="cardModal1"
@@ -156,7 +139,7 @@
 >
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <!-- Modal Header -->
+      <!-- Modal Header 
       <div class="modal-header">
         <h5 class="modal-title" id="cardModalLabel1">
           Add {{modalCard.name}} to Deck
@@ -169,9 +152,9 @@
         ></button>
       </div>
 
-      <!-- Modal Body -->
+      <!-- Modal Body 
       <div class="modal-body">
-        <!-- Select Deck to use -->
+        <!-- Select Deck to use
 
         <div ng-if="decks.length > 0">
           <label for="deckList" class="form-control">Select your Deck</label>
@@ -182,25 +165,28 @@
             ng-change="setDeckIndex(deckIndex)"
           >
             <option
-              ng-repeat="(index, deck) in decks track by $index"              
-              value="{{index}}"              
-              style="width:150px;"
-              
-            >{{deck.name}}  {{index}}
+              ng-repeat="(index, deck) in decks track by $index"
+              value="{{index}}"
+              style="width: 150px"
+            >
+              {{deck.name}} {{index}}
             </option>
           </select>
         </div>
 
-        <button ng-click="addToDeck(modalCard, deckIndex)" class="btn btn-primary">
+        <button
+          ng-click="addToDeck(modalCard, deckIndex)"
+          class="btn btn-primary"
+        >
           Add to Deck
         </button>
 
-        <!-- Cards List -->
+        <!-- Cards List 
 
-        <!-- End of Cards List -->
+        <!-- End of Cards List
       </div>
 
-      <!-- Modal Footer -->
+      <!-- Modal Footer
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
@@ -208,4 +194,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
