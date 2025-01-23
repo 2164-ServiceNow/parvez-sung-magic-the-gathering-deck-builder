@@ -1,61 +1,152 @@
-<div>
-    <input ng-model="newDeckName" placeholder="New Deck" />
-    <button ng-click='createDeck()'>Create Deck</button>
-    <label for="uploadDeckJSON" id="uploadDeckJSONLabel">Upload Deck</label> <!--click to upload deck JSON-->
-    <input type="file" accept=".json" id="uploadDeckJSON" />
+<div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+        <input class="fs-5 me-2" ng-model="newDeckName" placeholder="Enter deck name" />
+        <button class="btn btn-primary fs-5 me-2" ng-click='createDeck()'>Create Deck</button>
+        <label class="fs-5 me-2" for="uploadDeckJSON" id="uploadDeckJSONLabel">Upload Deck</label> <!--click to upload deck JSON-->
+        <input class="fs-5 me-2" type="file" accept=".json" id="uploadDeckJSON" />
+    </div>
+    <div class="d-flex align-items-center">
+        <button class="btn btn-primary fs-5" ng-click="clearDecks()" style="background-color: red;">Clear All Decks</button> <!--remove decks from localStorage-->
+    </div>
 </div>
-<div>
-    <button ng-click="clearDecks()">Clear All Decks</button> <!--remove decks from localStorage-->
-</div>
-<div>
-    <!--Rename deck-->
-    <input ng-model="renameSelectDeckName" placeholder="Enter new name" ng-show="selectedDeck !== ''" />
-    <button ng-click='renameSelectDeck()' ng-show="selectedDeck !== ''">Rename Deck</button>
-</div>
-
 <!--Deck List-->
 <div ng-if="decks.length !== 0 && selectedDeck === ''">
-    <ul>
+    <ul class="mt-2" style="list-style-type: none; padding-left: 0;">
         <li ng-repeat="(index, deck) in decks track by $index">
-            <button ng-click="selectDeck(index, deck)">{{deck.name}}</button>
+            <button class="btn btn-primary fs-5 mt-1 mb-1" ng-click="selectDeck(index, deck)">{{deck.name}}</button>
         </li>
     </ul>
 </div>
 <div ng-if="selectedDeck !== ''">
-    <!--Selected Deck Details-->
     <div>
-        <button ng-click="clearDeckScope()">Return</button>
+        <button class="btn btn-primary mt-2 mb-2" ng-click="clearDeckScope()">←</button>
     </div>
-    <button ng-click="createDeck('Copy of ' + selectedDeck.name, selectedDeck.color, selectedDeck.cards)">Copy
-        Deck</button>
-    <div>{{selectedDeck.name}}</div>
-    <div>{{selectedDeck.color}}</div>
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Left side: Rename Deck -->
+        <div class="d-flex align-items-center">
+            <input ng-model="renameSelectDeckName" placeholder="Enter new name" ng-show="selectedDeck !== ''" class="fs-5 me-2" />
+            <button class="btn btn-primary fs-5 me-2" ng-click='renameSelectDeck(renameSelectDeckName)' ng-show="selectedDeck !== ''">Rename Deck ✏️</button>
+        </div>
+        
+        <!-- Right side: Copy, Download, Delete Deck-->
+        <div class="d-flex align-items-center">
+            <button class="btn btn-primary fs-5 me-2" ng-click="createDeck('Copy of ' + selectedDeck.name, selectedDeck.color, selectedDeck.cards)">Copy Deck 🗐</button>
+            <button class="btn btn-primary fs-5 me-2" ng-click="downloadDeckJSON()" style="background-color: green;">Download 💾</button>
+            <button class="btn btn-primary fs-5" ng-click="deleteSelectDeck()" style="background-color: red;">Delete 🗑️</button>
+        </div>
+    </div>
+    <div class="text-center mt-2">
+        <h2>{{selectedDeck.name}}</h2>
+        <h4>{{selectedDeck.color | colorIDs}}</h4>
+        <h4>Cards: {{selectedDeckStatistics[3]}}</h4>
+        <h4 ng-if="selectedDeckStatistics[3] !== 0">Lands: {{selectedDeckStatistics[2]}}</h4>
+    </div>
+    <div id="cmcBarGraph" class="container mt-3 mb-3" ng-if="selectedDeckStatistics[3] !== 0">
+        <h3>Mana Costs</h3>
+        <div class="row">
+            <div class="col-12 m-1" ng-repeat="(cmc, count) in selectedDeckStatistics[0]">
+                <div class="d-flex align-items-center">
+                    <h5 class="me-2" style="width: 220px;">CMC: {{cmc}} | Count: {{count}}</h5>
+                    <div
+                        class="bar bg-warning "
+                        ng-style="{
+                            width: (count / selectedDeckStatistics[3] * 100) + '%',
+                            height: '30px',
+                            'line-height': '30px',
+                            'text-align': 'center'
+                        }"
+                    ></div>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div id="rarityGraph" class="container mt-3 mb-3" ng-if="selectedDeckStatistics[3] !== 0">
+        <h3>Card Rarities</h3>
+        <div class="row">
+            <div class="col-12 m-1">
+                <div class="d-flex align-items-center">
+                    <h5 class="me-2" style="width: 220px;">Common | Count: {{selectedDeckStatistics[1]["Common"] || 0}}</h5>
+                    <div
+                        class="bar bg-primary "
+                        ng-style="{
+                            width: (selectedDeckStatistics[1]['Common'] / selectedDeckStatistics[3] * 100) + '%',
+                            height: '30px',
+                            'line-height': '30px',
+                            'text-align': 'center'
+                        }"
+                    ></div>
+                </div>
+            </div>
+            <div class="col-12 m-1">
+                <div class="d-flex align-items-center">
+                    <h5 class="me-2" style="width: 220px;">Uncommon | Count: {{selectedDeckStatistics[1]["Uncommon"] || 0}}</h5>
+                    <div
+                        class="bar bg-primary "
+                        ng-style="{
+                            width: (selectedDeckStatistics[1]['Uncommon'] / selectedDeckStatistics[3] * 100) + '%',
+                            height: '30px',
+                            'line-height': '30px',
+                            'text-align': 'center'
+                        }"
+                    ></div>
+                </div>
+            </div>   
+            <div class="col-12 m-1">
+                <div class="d-flex align-items-center">
+                    <h5 class="me-2" style="width: 220px;">Rare | Count: {{selectedDeckStatistics[1]["Rare"] || 0}}</h5>
+                    <div
+                        class="bar bg-primary "
+                        ng-style="{
+                            width: (selectedDeckStatistics[1]['Rare'] / selectedDeckStatistics[3] * 100) + '%',
+                            height: '30px',
+                            'line-height': '30px',
+                            'text-align': 'center'
+                        }"
+                    ></div>
+                </div>
+            </div>   
+            <div class="col-12 m-1">
+                <div class="d-flex align-items-center">
+                    <h5 class="me-2" style="width: 220px;">Mythic | Count: {{selectedDeckStatistics[1]["Mythic"] || 0}}</h5>
+                    <div
+                        class="bar bg-primary "
+                        ng-style="{
+                            width: (selectedDeckStatistics[1]['Mythic'] / selectedDeckStatistics[3] * 100) + '%',
+                            height: '30px',
+                            'line-height': '30px',
+                            'text-align': 'center'
+                        }"
+                    ></div>
+                </div>
+            </div> 
+        </div>
+    </div>
     <div class="d-flex flex-wrap justify-content-start">
-        <div class="card m-2" ng-repeat="card in selectedDeck.cards track by $index" ng-model="cards" style="width: 18rem">
+        <div class="card m-2" ng-repeat="card in selectedDeck.cards track by $index" ng-model="cards"
+            style="width: 18rem">
             <img ng-src="{{card.imageUrl || imgPlaceHolder}}" class="" alt="Card image" />
             <div class="card-body">
                 <h5 class="card-title">{{card.name}}</h5>
-                <p class="card-text">{{card.text}}</p>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal"
+                <p class="card-text" ng-bind-html="(card.originalText || card.text) | newlineText" style="white-space: pre-wrap;"></p>
+                <button class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal"
                     ng-click="setCardDetails(card)">
-                    Details
+                    ⌕
                 </button>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal1"
+                <button class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal1"
                     ng-click="setCardDetails(card)">
-                    Add to Deck
+                    +
                 </button>
-                <button class="btn btn-primary" ng-click="removeFromDeck($index)" style="background-color: red;">
-                    Remove From Deck
+                <button class="btn btn-primary" class="btn btn-primary" ng-click="removeFromDeck($index)" style="background-color: red;">
+                    -
                 </button>
             </div>
         </div>
     </div>
-    <button ng-click="downloadDeckJSON()">Download</button>
-    <button ng-click="deleteSelectDeck()">Delete</button>
 </div>
 <!--No decks saved-->
-<div ng-if="decks.length === 0">
-    <p> NO DECKS SAVED</p>
+<div class="text-center mt-3" ng-if="decks.length === 0">
+    <h2> NO DECKS SAVED</h2>
 </div>
 
 <card-modal></card-modal>
+
