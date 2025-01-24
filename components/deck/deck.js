@@ -31,8 +31,8 @@ angular.module('deck', [])
         $scope.renameSelectDeckName = "" // user text input for renaming deck's name
         $scope.selectedDeck = '' // object that holds the selected decks details
         $scope.selectedDeckIndex = null // where the selected deck is in the storage array'
-        $scope.imgPlaceHolder = "images/placeholderCard.jpg"
-        $scope.selectedDeckStatistics = []
+        $scope.imgPlaceHolder = "images/placeholderCard.jpg" // used when card.imageUrl is unavailable
+        $scope.selectedDeckStatistics = [] // array for all deck statistics (cmc, rarities, lands, total # of cards)
 
         // Saves decks array to localStorage
         function saveDecks() {
@@ -185,29 +185,34 @@ angular.module('deck', [])
 
         // Add below for bootstrap-card, card-modal, and add-to-deck-modal.
         // Include $rootScope, deckService, favoriteService, cardModalService
-        $scope.imgPlaceHolder = "images/placeholderCard.jpg";
-        $scope.modalCard = [];
+        $scope.imgPlaceHolder = "images/placeholderCard.jpg"
+        $scope.modalCard = []
 
+        // Display card details on modal
         $scope.cardDetails = function (card) {
-        $scope.modalCard = card;
+        $scope.modalCard = card
         cardModalService.setCard(card)
-        };
+        }
 
+        // Display deck menu and adding card to deck modal
         $scope.openAddToDeckModal = function (card) {
-        $scope.modalCard = card;
-        $scope.decks = deckService.getDecks();
-        };
+        $scope.modalCard = card
+        $scope.decks = deckService.getDecks()
+        }
 
+        // Add card to favorites list
         $scope.addtoFav = function (card) {
-        $scope.favorties = favoriteService.addToFavorites(card);
-        };
+        $scope.favorties = favoriteService.addToFavorites(card)
+        }
 
+        // Remove card from favorites list
         $scope.removeFromFavorites = function (index) {
-        favoriteService.removeFromFavorites(index);
-        console.log(`index == ${index}`);  
-        $scope.favorites = favoriteService.getFavorites();
-        };
+        favoriteService.removeFromFavorites(index)
+        console.log(`index == ${index}`)  
+        $scope.favorites = favoriteService.getFavorites()
+        }
 
+        // Add card to deck, update localStorage
         $scope.addToDeck = function (card, index) {
         if (!card || !index) {
             console.log("Error with card or index")
@@ -219,8 +224,9 @@ angular.module('deck', [])
         $scope.broadcastDecksChange()
         }
 
+        // Alert components to deck list changing
         $scope.broadcastDecksChange = function() {
-        $rootScope.$broadcast("decksChange");
+        $rootScope.$broadcast("decksChange")
         }
         // Add everything above
 	}

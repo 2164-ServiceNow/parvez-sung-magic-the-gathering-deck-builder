@@ -10,19 +10,29 @@ angular
       },
       templateUrl: "pages/addToDeckModal/addToDeckModal.html",
       controller: function ($scope) {
-        $scope.selectedDeckIndex = null; // Default value for the selected deck
+        $scope.selectedDeckIndex = null // Default value for the selected deck
+        $scope.addToDeckCount = 0 // Tracks how many times the card has been added to deck
 
         $scope.handleAddToDeck = function (index) {
           $scope.selectedDeckIndex = index
-          console.log("handleAddToDeck " + $scope.selectedDeckIndex)
-          console.log($scope.modalCard)
           if ($scope.selectedDeckIndex !== null) {
+            $scope.addToDeckCount++
             $scope.onAddToDeck({
               card: $scope.modalCard,
               index: $scope.selectedDeckIndex,
-            });
+            })
           }
-        };
-      },
-    };
-  });
+        }
+
+        $scope.resetAddToDeckCount = function () {
+          $scope.addToDeckCount = 0
+        }
+
+        // Reset addToDeckCount when modal closes
+        const modal = document.getElementById('addToDeckModal')
+        modal.addEventListener('hidden.bs.modal', event => {
+          $scope.resetAddToDeckCount()
+        })
+      }
+    }
+  })
