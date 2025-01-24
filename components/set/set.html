@@ -1,0 +1,72 @@
+<div class="container mt-4">
+    <!-- Show set list from search with page buttons -->
+    <p class="h5">Query: <span class="text-muted">{{ searchValue }}</span></p>
+
+    <div ng-if="sets.sets && sets.sets.length > 0 && setDetails == ''">
+        <!-- Pagination Buttons -->
+        <div class="mb-3 d-flex justify-content-center">
+            <button class="btn btn-outline-primary me-2" ng-if="firstPage !== ''" ng-click="goToPage(firstPage)">
+                First
+            </button>
+            <button class="btn btn-outline-secondary me-2" ng-if="previousPage !== '' && previousPage !== firstPage"
+                ng-click="goToPage(previousPage)">
+                Previous
+            </button>
+            <button class="btn btn-outline-secondary me-2" ng-if="nextPage !== ''" ng-click="goToPage(nextPage)">
+                Next
+            </button>
+            <button class="btn btn-outline-primary" ng-if="lastPage !== ''" ng-click="goToPage(lastPage)">
+                Last
+            </button>
+        </div>
+
+        <!-- Set List -->
+        <div class="row">
+            <div class="col-md-4 mb-3" ng-repeat="set in sets.sets" ng-if="set.name">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ set.name }}</h5>
+                        <button class="btn btn-primary mt-2" ng-click="details(set)">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Set Details -->
+    <div ng-if="setDetails !== ''" class="mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <button class="btn btn-primary mb-3" ng-click="resetDetails()">←</button>
+                <h4 class="card-title">{{ setDetails.name }}</h4>
+                <p class="card-text">Release Date: {{ setDetails.releaseDate }}</p>
+                <button class="btn btn-success" ng-click="pullBooster(setDetails.code)" ng-if="setDetails.code">
+                    Pull Booster {{ setDetails.code }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booster Error -->
+    <div ng-show="booster === 'error'" class="alert alert-danger mt-3">
+        <p>BOOSTER UNAVAILABLE</p>
+    </div>
+
+    <!-- Booster Cards -->
+    <div ng-if="booster !== 'error' && booster !== ''" class="mt-4">
+        <div class="row">
+            <div class="d-flex flex-wrap justify-content-start">
+                <bootstrap-card ng-repeat="card in booster.cards" card="card" img-placeholder="{{imgPlaceHolder}}"
+                    on-details="cardDetails(card)" on-add-to-deck="openAddToDeckModal(card)"
+                    on-favorites="addtoFav(card)" card-display-type="cards"></bootstrap-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Not Found in Database -->
+    <div ng-if="sets === undefined || 0 === sets.sets.length" class="alert alert-warning mt-4">
+        <p>NOT FOUND IN DATABASE</p>
+    </div>
+</div>

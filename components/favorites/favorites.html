@@ -1,0 +1,25 @@
+<!-- Display all cards in 'favorites' in localStorage -->
+<div class="container-lg">
+  <div class="container my-4">
+    <div id="removeFavAlert"></div>
+    <div class="d-flex flex-wrap justify-content-start"> 
+      <bootstrap-card
+          ng-repeat="card in favorites track by $index"
+          card="card"          
+          img-placeholder="{{imgPlaceHolder}}"
+          on-details="cardDetails(card)"
+          on-add-to-deck="openAddToDeckModal(card)"
+          on-favorites="addtoFav(card)"
+          remove-from-favorites="removeFromFavorites(index)"
+          card-display-type="favs"
+          index="{{$index}}"
+        ></bootstrap-card>
+    </div>
+  </div>
+</div>
+<card-modal></card-modal>
+<add-to-deck-modal
+  modal-card="modalCard"
+  decks="decks"
+  on-add-to-deck="addToDeck(card, index)"
+></add-to-deck-modal>

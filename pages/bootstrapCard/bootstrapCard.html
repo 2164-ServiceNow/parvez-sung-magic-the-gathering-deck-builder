@@ -1,0 +1,33 @@
+<!-- First card that user sees displayed before any buttons to open modals are pressed -->
+<div class="card m-2" style="width: 18rem">
+    <img ng-src="{{card.imageUrl || imgPlaceholder}}" class="card-img-top" alt="Card image" />
+    <div class="card-body">
+        <h5 class="card-title">{{card.name}}</h5>
+        <p class="card-text" ng-bind-html="(card.originalText || card.text) | newlineText"></p>
+        <!-- Open modal to see card details -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal" data-toggle="tooltip"
+            data-placement="top" title="See More Details" ng-click="onDetails({ card: card })">
+            &#8505;
+        </button>
+
+        <!-- Add card to deck -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addToDeckModal" data-toggle="tooltip"
+            data-placement="top" title="Add to a Deck" ng-click="onAddToDeck({ card: card })">+</button>
+
+        <!-- Remove card from deck -->
+        <button ng-show="{{cardDisplayType === 'decks'}}" class="btn btn-danger"
+            ng-click="removeFromDeck({ index: index  })" data-toggle="tooltip" data-placement="top"
+            title="Remove from Deck">-</button>
+
+        <!-- Add card to favorites -->
+        <button ng-show="{{cardDisplayType !== 'favs' }}" class="btn btn-primary" ng-click="onFavorites({ card: card })"
+            title="Add to Favorites" ng-class="{'btn-danger': isInFavorites(card)}">
+            &hearts;
+        </button>
+
+        <!-- Remove card from favorites -->
+        <button id="removeFavButton" ng-show="{{cardDisplayType === 'favs'}}" class="btn btn-danger"
+            ng-click="removeFromFavorites({ index: index  })" data-toggle="tooltip" data-placement="top"
+            title="Remove from Favorites">-</button>
+    </div>
+</div>
