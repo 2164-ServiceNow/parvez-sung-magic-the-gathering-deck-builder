@@ -8,9 +8,8 @@ angular.module('playtest', [])
             $scope.selectDeckCards = [] // card array from selected deck
             $scope.hand = 7 // starting number of cards in hand in MTG
 
-            $scope.init = function() {
-                $scope.imgPlaceHolder = "images/placeholderCard.jpg" // used when card.imageUrl is unavailable
-            }
+            // used when card.imageUrl is unavailable
+            $scope.imgPlaceHolder = "images/placeholderCard.jpg";
 
             // Function to change the selected deck
             $scope.changeDeck = function(deck) {
@@ -41,7 +40,5 @@ angular.module('playtest', [])
             $scope.drawCard = function(){
                 $scope.hand += 1
             }
-
-            $scope.init()
         }
 })
