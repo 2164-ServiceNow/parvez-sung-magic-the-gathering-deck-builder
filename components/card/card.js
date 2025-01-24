@@ -1,26 +1,30 @@
 angular
   .module("card", [])
-
   .component("card", {
     templateUrl: "components/card/card.html",
     controller: function (
       $scope,
       $http,
-      searchBarService,
-      deckService,
-      favoriteService,
-      deckService,
-      $window
+      searchBarService      
     ) {
-      $scope.cards = "";
-      $scope.cardDetails = "";
-      $scope.pageLink = "";
-      $scope.currentPage = "";
+      $scope.cards = [];
+      // $scope.cardDetails = "";
+      // $scope.pageLink = "";
+      // $scope.currentPage = "";
       $scope.imgPlaceHolder = "images/placeholderCard.jpg";
-      $scope.modalCard = [];
-      $scope.decks = [];
 
-      
+      $scope.init=function(){
+        $scope.searchValue = searchBarService.getQuery();
+        $http
+          .get(`https://api.magicthegathering.io/v1/cards?${$scope.searchValue}`)
+          .then((response) => {
+            $scope.cards = response.data;
+            console.log($scope.cards);
+            $scope.parseLinkHeader(response.headers("Link"));
+          });
+      }
+      $scope.init();
+      $scope.selectedDeckIndex = null;
 
       $scope.$watch(
         function () {
@@ -28,7 +32,6 @@ angular
         },
         function (newQuery) {
           $scope.searchValue = newQuery;
-          // console.log(`this is the query::: https://api.magicthegathering.io/v1/cards?${newQuery}`);
 
           $http
             .get(`https://api.magicthegathering.io/v1/cards?${newQuery}`)
@@ -40,9 +43,9 @@ angular
         }
       );
 
-      $scope.addtoFav = function (card) {
-        $scope.favorties = favoriteService.addToFavorites(card);
-      };
+      // $scope.addtoFav = function (card) {
+      //   $scope.favorties = favoriteService.addToFavorites(card);
+      // };
 
       $scope.details = function (cardDetails) {
         $scope.cardDetails = cardDetails;
@@ -89,27 +92,39 @@ angular
         });
       };
 
-      $scope.cardDetails = function (card) {
-        $scope.modalCard = card;
-      };
+      // $scope.cardDetails = function (card) {
+      //   $scope.modalCard = card;
+      // };
 
-      $scope.openAddToDeckModal = function (card) {
-        $scope.modalCard = card;
-        $scope.decks = deckService.getDecks();
-      };
+      // $scope.openAddToDeckModal = function (card) {
+      //   $scope.decks = deckService.getDecks();
+      //   $scope.modalCard = card;
+      //   if($scope.decks.length > 0){
+      //     $scope.selectedDeckIndex = 0;
+      //   }
+      // };
 
-      $scope.addToDeck = function (modalCard, index) {
-        console.log(`index::::${index}`);
-        console.log(`before adding card :${deckService.getDecks()}`);
-        deckService.addToDeck(modalCard, index);
-        console.log(`after adding card :${deckService.getDecks()}`);
-      };
+      // $scope.addToDeck = function (modalCard, selectedDeckIndex) {
+      //   console.log(`index::::${index}`);
+      //   console.log(`before adding card :${deckService.getDecks()}`);
+      //   deckService.addToDeck(modalCard, selectedDeckIndex);
+      //   console.log(`after adding card :${deckService.getDecks()}`);
+      // };
 
-      $scope.setDeckIndex = function (index) {
-        $scope.deckIndex = index;
-        console.log(`Deck index ${$scope.deckIndex}`);
-      };
+      // $scope.setDeckIndex = function (index) {
+      //   $scope.deckIndex = index;
+      //   console.log(`Deck index ${$scope.deckIndex}`);
+      // };
 
-      // $scope.addToFavorites = function (card) {};
+      // const toastTrigger = document.getElementById("liveToastBtn");
+      // const toastLiveExample = document.getElementById("liveToast");
+
+      // if (toastTrigger) {
+      //   const toastBootstrap =
+      //     bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+      //   toastTrigger.addEventListener("click", () => {
+      //     toastBootstrap.show();
+      //   });
+      // }
     },
   });

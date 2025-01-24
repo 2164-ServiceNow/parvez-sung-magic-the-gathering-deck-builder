@@ -1,4 +1,15 @@
-<!-- Modal for Card Details -->
+angular
+  .module("cardDetailsModal", [])
+  .directive("cardDetailsModal", function () {
+    return {
+      restrict: "E",
+      scope: {
+        modalCard: "=",
+        imgPlaceHolder : "@", // Two-way binding for the card data
+      },
+      template: `
+
+
 <div
   class="modal fade"
   id="cardModal"
@@ -26,7 +37,7 @@
         <div class="row g-0">
           <div class="col-md-4">
             <img
-              src="{{modalCard.imageUrl || imgPlaceHolder.url}}"
+              src="{{modalCard.imageUrl || imgPlaceHolder}}"
               class="img-fluid rounded-start"
               alt="{{card.name}}"
             />
@@ -64,68 +75,6 @@
       </div>
     </div>
   </div>
-</div>
-
-
-<div
-  class="modal fade"
-  id="cardModal1"
-  tabindex="-1"
-  aria-labelledby="cardModalLabel1"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="cardModalLabel1">
-          Add {{modalCard.name}} to Deck
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <!-- Select Deck to use -->
-
-        <div ng-if="decks.length > 0">
-          <label for="deckList" class="form-control">Select your Deck</label>
-          <select
-            class="form-select"
-            id="deckList"
-            ng-model="deckIndex"
-            ng-change="setDeckIndex(deckIndex)"
-          >
-            <option
-              ng-repeat="(index, deck) in decks track by $index"              
-              value="{{index}}"              
-              style="width:150px;"
-              
-            >{{deck.name}}  {{index}}
-            </option>
-          </select>
-        </div>
-
-        <button ng-click="addToDeck(modalCard, deckIndex)" class="btn btn-primary">
-          Add to Deck
-        </button>
-
-        <!-- Cards List -->
-
-        <!-- End of Cards List -->
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+</div>`,
+    };
+  });

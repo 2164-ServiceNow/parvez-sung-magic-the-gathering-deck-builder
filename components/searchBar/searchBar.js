@@ -91,6 +91,17 @@ angular.module("searchBar", []).component("searchbar", {
       { label: "Squirrel", name: "Squirrel", value: false },
     ];
 
+    // $scope.searchOption ='card';
+    $scope.$watch(
+      function () {
+        return searchBarService.getSearchOption();
+      },
+      function (searchOption) {
+        $scope.searchOption = searchOption;
+        console.log($scope.searchOption);
+      }
+    );
+
     const searchInput = document.getElementById("searchValue");
     const filterCollapse = document.getElementById(
       "panelsStayOpen-collapseOne"

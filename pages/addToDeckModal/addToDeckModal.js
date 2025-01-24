@@ -1,84 +1,105 @@
-angular
-  .module("addToDeckModal", [])
-  .directive("addToDeckModal", function () {
-    return {
-      restrict: "E",
-      scope: {
-        modalCard: "=", // Two-way binding for the card data
-        decks: "=", // Two-way binding for the list of decks
-        onAddToDeck: "&", // Callback for adding the card to a deck
-      },
-      template: `
-        <div
-          class="modal fade"
-          id="addToDeckModal"
-          tabindex="-1"
-          aria-labelledby="addLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <!-- Modal Header -->
-              <div class="modal-header">
-                <h5 class="modal-title" id="addLabel">
-                  Add {{modalCard.name}} to Deck
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
+angular.module("addToDeckModal", []).directive("addToDeckModal", function () {
+  return {
+    restrict: "E",
+    scope: {
+      modalCard: "=", // Two-way binding for the card data
+      decks: "=", // Two-way binding for the list of decks
+      // onAddToDeck: "&", // Callback for adding the card to a deck
+      // selectedDeckIndex: "@", // Two-way binding for selectedDeckIndex
+    },
+    templateUrl: "pages/addToDeckModal/addToDeckModal.html",
+    controller: function ($scope, deckService, ModalService) {
+      $scope.decks=[]
+      
 
-              <!-- Modal Body -->
-              <div class="modal-body">
-                <div ng-if="decks && decks.length > 0">
-                  <label for="deckList" class="form-label">Select your Deck</label>
-                  <select
-                    class="form-select"
-                    aria-label="Select Deck"
-                    id="deckList"
-                    ng-model="selectedDeckIndex"
-                    ng-options="index as deck.name for (index, deck) in decks track by index"
-                  >
-                    <option value="" disabled selected>Select a Deck</option>
-                  </select>
-                </div>
-                <button
-                  class="btn btn-primary mt-3"
-                  ng-click="handleAddToDeck()"
-                  ng-disabled="!selectedDeckIndex"
-                >
-                  Add to Deck
-                </button>
-              </div>
+      $scope.init =function(){
+        $scope.decks = deckService.getDecks();  
+        $scope.modalCard = ModalService.getCard();             
+        if ($scope.decks.length > 0) {
+          $scope.selectedDeckIndex = 0; // Default to the first deck
+        }
+        console.log(`selected Deck Index: ${$scope.selectedDeckIndex}`);
+      }     
+      $scope.init();
+      
+      
+      
+      
 
-              <!-- Modal Footer -->
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `,
-      controller: function ($scope) {
-        $scope.selectedDeckIndex = null; // Default value for the selected deck
+      // $scope.init =function(){
+      //   $scope.decks = ModalService.getDecks();
+      //   // $scope.modalCard = ModalService.getCard();
+      //   // console.log($scope.decks);
+      //   $scope.decks = deckService.getDecks();
+      //   if ($scope.decks.length > 0) {
+      //     $scope.selectedDeckIndex = 0; // Default to the first deck
+      //   }
+      //   // console.log($scope.decks);
+      //   console.log(`selected Deck Index: ${$scope.selectedDeckIndex}`);
 
-        $scope.handleAddToDeck = function () {
-          if ($scope.selectedDeckIndex !== null) {
-            $scope.onAddToDeck({
-              card: $scope.modalCard,
-              index: $scope.selectedDeckIndex,
-            });
-          }
-        };
-      },
-    };
-  });
+      // }
+
+      // $scope.searchOption ='card';
+    // $scope.$watch(
+    //   function () {
+    //     return ModalService.getCard();
+    //   },
+    //   function (card) {
+    //     $scope.modalCard = card;
+    //     console.log($scope.modalCard)
+    //     // $scope.decks = deckService.getDecks();
+    //   }
+    // );
+
+      $scope.changeIndex=function (index){
+        $scope.selectedDeckIndex = index;
+        console.log(`change to index ${$scope.selectedDeckIndex}}`)
+      }
+
+      $scope.addToDeck=function(){
+        // console.log(decks);
+        console.log($scope.modalCard);
+        // ModalService.getCard();
+        deckService.addToDeck(ModalService.getCard(), $scope.selectedDeckIndex)
+      }
+
+      // $scope.init();
+
+      // Handle adding a card to the selected deck
+      // $scope.handleAddToDeck = function () {
+      //   if ($scope.selectedDeckIndex !== null && $scope.modalCard) {
+      //     // Call the parent function (via the binding)
+      //     $scope.onAddToDeck({
+      //       card: $scope.modalCard,
+      //       selectedDeckIndex: $scope.selectedDeckIndex
+      //     });
+
+      //     // Optional: Directly update decks via the service
+      //     deckService.addToDeck(modalCard,selectedDeckIndex);
+      //   }
+      // };
+
+      // // Call init when the controller loads
+
+    },
+  };
+});
+
+// angular
+//   .module("magicApp")
+//   .controller(
+//     "AddToDeckModalController",
+//     function ($scope, $uibModalInstance, card, decks) {
+//       $scope.card = card;
+//       $scope.decks = decks;
+//       // Example: Close the modal and pass data back to the parent
+//       $scope.selectDeck = function (selectedDeck) {
+//         $uibModalInstance.close(selectedDeck); // Send the selected deck back
+//       };
+
+//       // Dismiss the modal
+//       $scope.cancel = function () {
+//         $uibModalInstance.dismiss("cancel");
+//       };
+//     }
+//   );

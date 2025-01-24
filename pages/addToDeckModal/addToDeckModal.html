@@ -1,0 +1,74 @@
+<div
+  class="modal fade"
+  id="addToDeckModal"
+  tabindex="-1"
+  aria-labelledby="addToDeckModalLabel"
+  
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToDeckModalLabel">
+          Add {{ modalCard.name || 'card'}} to Deck
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Deck Selection -->
+        <div ng-if="decks.length > 0">
+          <label for="deckSelect">Select a Deck</label>
+
+          <select 
+            class="form-select" 
+            aria-label="Select a deck" 
+            ng-model="selectedDeckIndex" 
+            ng-change="onDeckChange({{ $index }})">
+            <option value="" disabled selected>Select a deck</option>
+            <option 
+              ng-repeat="deck in decks track by $index" 
+              value="{{ $index }}">
+              {{ deck.name }}
+            </option>
+          </select>
+
+          {{ $selectedDeckIndex }}
+        <!-- <select
+            id="deckSelect"
+            class="form-select"
+            ng-model="selectedDeckIndex"
+            ng-options ="index of deck in decks tracked by $index"
+            ng-change = "changeIndex({{$index}})"
+            selectedDeckIndex="{{$index}}"
+            
+          >
+           ng-options="index as deck.name for (index, deck) in decks track by index"
+            <option value="" disabled>Select a Deck</option> -->
+          </select>
+          <p>{{deck.name}}</p>
+          <button
+            class="btn btn-primary mt-3 w-100"
+            ng-click="addToDeck()"
+            data-bs-dismiss="modal"
+            
+            ng-disabled="selectedDeckIndex === null"
+          >
+            Add to Deck
+          </button>
+        </div>
+
+        <!-- No Decks Available -->
+        <div ng-if="!decks || decks.length === 0" class="text-center">
+          <p class="text-muted">No decks available. Please create a deck first!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

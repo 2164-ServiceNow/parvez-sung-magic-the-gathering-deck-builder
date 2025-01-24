@@ -1,19 +1,16 @@
 <div class="container-lg">
   <div class="container my-4">
-    <div id="removeFavAlert"></div>
+    
     <div class="d-flex flex-wrap justify-content-start">
       
       <bootstrap-card
           ng-repeat="card in favorites track by $index"
           card="card"          
-          img-placeholder="{{imgPlaceHolder}}"
-          on-details="cardDetails(card)"
-          on-add-to-deck="openAddToDeckModal(card)"
-          on-favorites="addtoFav(card)"
-          remove-from-favorites="removeFromFavorites(index)"
-          card-display-type="favs"
+          img-placeholder="{{card.imageUrl || imgPlaceHolder}}"
+          card-display-type='favs'
           index="{{$index}}"
         ></bootstrap-card>
+        </div>
     </div>
   </div>
 </div>

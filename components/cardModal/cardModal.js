@@ -4,8 +4,9 @@ angular
   .component("cardModal", {
     templateUrl: "components/cardModal/cardModal.html",
     controller: function ($scope, $rootScope, deckService, cardModalService) {
-        $scope.decks = deckService.getDecks() || []
-        $scope.imgPlaceHolder = "";
+        $scope.decks = deckService.getDecks() || [];
+        $scope.imgPlaceHolder = "images/placeholderCard.jpg";
+        
         $scope.$watch(
             function () {
               return cardModalService.getCard();

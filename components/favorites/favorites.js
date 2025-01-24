@@ -2,16 +2,27 @@ angular.module("favorites", []).component("favorites", {
   templateUrl: "components/favorites/favorites.html",
   controller: function ($scope, $window, favoriteService) {
     // const vm = this;
-    $scope.imgPlaceHolder = "images/placeholderCard.jpg";
+    $scope.imgPlaceHolder = "images\placeholderCard.jpg";
+    $scope.cardDisplayOption = 'favs'
+    
 
     $scope.removeFromFavorites = function (index) {
       favoriteService.removeFromFavorites(index);
       console.log(`index == ${index}`);  
-      $scope.favorites = favoriteService.getFavorites();
-        
-        
+      $scope.favorites = favoriteService.getFavorites(); 
 
     };
+
+    // $scope.searchOption ='card';
+    $scope.$watch(
+      function () {
+        return favoriteService.getFavorites();
+      },
+      function (favorites) {
+        $scope.favorites = favorites;
+        console.log($scope.favorites)
+      }
+    );
 
     $scope.addtoFav = function (card) {
       $scope.favorties = favoriteService.addToFavorites(card);
@@ -20,6 +31,8 @@ angular.module("favorites", []).component("favorites", {
     // If you need additional logic for initialization, add here
     this.$onInit = function () {
       // Load favorites from localStorage
+      $scope.cardDisplayOption='favs';
+      $scope.imgPlaceHolder = "images/placeholderCard.jpg";
       $scope.favorites =
         JSON.parse($window.localStorage.getItem("favorites")) || [];
       console.log("Favorites loaded:", $scope.favorites);

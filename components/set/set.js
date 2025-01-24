@@ -6,7 +6,20 @@ angular.module('set', [])
 		$scope.sets = "" // response from the http.get to the MTG API
         $scope.setDetails = '' // user selects a set to look, contains an object with all the selected set's details
 		$scope.booster = '' // response from getting booster from set in MTG API
-      	$scope.cardDetails = "" // If user selects a card from opening a booster, contains an object of the card's details
+      	$scope.cardDetails = "" // If user selects a card from opening a booster, contains an object of the card's 
+
+		//   $scope.cards = "";
+		//   $scope.cardDetails = "";
+		//   $scope.pageLink = "";
+		//   $scope.currentPage = "";
+		  $scope.imgPlaceHolder = "images/placeholderCard.jpg";
+		  $scope.modalCard = [];
+		  $scope.decks = [];
+		  
+		  $scope.selectedDeckIndex=null;
+
+
+		// details
 		$scope.pageLink= ""; 
 		$scope.currentPage = "";
 
@@ -43,6 +56,31 @@ angular.module('set', [])
 				console.error('Error fetching booster:', error);
 			});
         }
+
+
+		$scope.cardDetails = function (card) {
+			$scope.modalCard = card;
+		  };
+	
+		  $scope.openAddToDeckModal = function (card) {
+			$scope.decks = deckService.getDecks();
+			$scope.modalCard = card;
+			if($scope.decks.length > 0){
+			  $scope.selectedDeckIndex = 0;
+			}
+		  };
+	
+		  $scope.addToDeck = function (modalCard, index) {
+			console.log(`index::::${index}`);
+			console.log(`before adding card :${deckService.getDecks()}`);
+			deckService.addToDeck(modalCard, index);
+			console.log(`after adding card :${deckService.getDecks()}`);
+		  };
+	
+		  $scope.setDeckIndex = function (index) {
+			$scope.deckIndex = index;
+			console.log(`Deck index ${$scope.deckIndex}`);
+		  };
 
 		// If user selects a card from successful booster open, we want to see the card's details
 		$scope.showCardDetails = function (cardDetails) {

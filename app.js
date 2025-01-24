@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'keywordListPage', 'favoritePage','searchBar', 'card', 'set', 'deck', 'keywords','navbar', 'cardModal','favorites', 'bootstrapCard', 'addToDeckModal'])
+angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'keywordListPage', 'favoritePage','searchBar', 'card', 'set', 'deck', 'keywords','navbar', 'cardModal','favorites', 'bootstrapCard', 'addToDeckModal','cardDetailsModal'])
 .config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
@@ -22,7 +22,7 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListP
         })
         .when("/decks", {
             templateUrl: "pages/deckListPage/deckListPage.html",
-            controller: 'decksCtrl'
+            // controller: 'decksCtrl'
         })
         .when("/keywords", {
             templateUrl: "pages/keywordListPage/keywordListPage.html",
