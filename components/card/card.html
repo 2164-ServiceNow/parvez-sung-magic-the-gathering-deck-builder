@@ -1,0 +1,114 @@
+<div class="container-lg">
+  <div class="container my-4">
+    <div class="d-flex flex-wrap justify-content-center m-2">
+      <!-- if we have cards then we show pagination -->
+      <div ng-if="cards.cards && cards.cards.length > 1 ">
+        <div id="pages" ng-if="cards !== undefined || cards.cards.length>1" >
+          
+          <!-- First Button -->
+          <button
+            class="btn btn-primary me-2"
+            ng-disabled="!firstPage"
+            ng-click="goToPage(firstPage)"
+          >
+            First
+          </button>
+
+          <!-- Previous Button -->
+          <button
+            class="btn btn-primary m-2"
+            ng-disabled="!previousPage"
+            ng-click="goToPage(previousPage)"
+          >
+            Previous
+          </button>
+
+          <!-- Next Button -->
+          <button
+            class="btn btn-primary me-2"
+            ng-disabled="!nextPage"
+            ng-click="goToPage(nextPage)"
+          >
+            Next
+          </button>
+
+          <!-- Last Button -->
+          <button
+            class="btn btn-primary me-2"
+            ng-disabled="!lastPage"
+            ng-click="goToPage(lastPage)"
+          >
+            Last
+          </button>
+        </div>
+      </div>
+      <br /><br />
+      <div class="d-flex flex-wrap justify-content-start">
+      <!-- A bootstrap card as an angular directive to display cards in the cards page -->
+        <bootstrap-card
+          ng-repeat="card in cards.cards"
+          card="card"
+          img-placeholder="{{imgPlaceHolder}}"
+          on-details="cardDetails(card)"
+          on-add-to-deck="openAddToDeckModal(card)"
+          on-favorites="addtoFav(card)"
+          card-display-type="cards"
+        ></bootstrap-card>
+      </div>
+
+    <!-- show pagination at the bottom of the page for cards -->
+    <div id="pages1" ng-if="cards !== undefined || cards.cards.length>1" >
+      <!-- First Button -->
+      <button
+      class="btn btn-primary me-2"
+      ng-disabled="!firstPage"
+      ng-click="goToPage(firstPage)"
+    >
+      First
+    </button>
+    <!-- Previous Button -->
+    <button
+      class="btn btn-primary m-2"
+      ng-disabled="!previousPage"
+      ng-click="goToPage(previousPage)"
+    >
+      Previous
+    </button>
+
+    <!-- Next Button -->
+    <button
+      class="btn btn-primary me-2"
+      ng-disabled="!nextPage"
+      ng-click="goToPage(nextPage)"
+    >
+      Next
+    </button>
+
+    <!-- Last Button -->
+    <button
+      class="btn btn-primary me-2"
+      ng-disabled="!lastPage"
+      ng-click="goToPage(lastPage)"
+    >
+      Last
+    </button>
+    </div>
+    </div>
+
+  <!-- div to show if there are not cards matching the search -->
+  <div ng-if="cards === undefined || 1 >= cards.cards.length">
+    <p>NOT FOUND IN DATABASE</p>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- card details modal -->
+<card-modal></card-modal>
+
+<!-- add to deck modal that adds cards -->
+<add-to-deck-modal
+  modal-card="modalCard"
+  decks="decks"
+  on-add-to-deck="addToDeck(card, index)"
+></add-to-deck-modal>

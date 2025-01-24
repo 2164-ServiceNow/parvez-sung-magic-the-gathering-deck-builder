@@ -1,0 +1,224 @@
+<div class="container-lg" id="searchBarContainer">
+  <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+    <!-- Input for searchValue -->
+    <div class="col flex-grow-1">
+      <label for="searchText" class="form-label">Choose Options</label>
+      <!-- Search Text -->
+      <input
+        type="text"
+        class="form-control"
+        id="searchValue"
+        ng-model="searchValue"
+        placeholder="Type what you are looking for...."
+      />
+    </div>
+
+    <!-- Dropdown for pageSize -->
+    <div class="col">
+      <label for="pageSize" class="form-label">Page Size</label>
+      <select
+        class="form-select"
+        aria-label="Results Per Page"
+        id="pageSize"
+        ng-model="pageSize"
+        ng-init="pageSize='20'"
+        ng-change="search()"
+      >
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+
+    <!-- Search button -->
+
+    <div class="d-flex flex-column mb-auto">
+      <div class="row" style="height: 30px"></div>
+      <div class="row">
+        <button
+          type="button"
+          class="btn btn-primary align-self-end"
+          id="searchButton"
+          ng-click="search()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- accordian which hides and shows the search filters for cards -->
+  <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="visually-hidden">
+        <button
+          class="accordion-button"
+          id="accordianButton"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseOne"
+          aria-expanded="true"
+          aria-controls="panelsStayOpen-collapseOne"
+        >
+          Accordian button for search filters
+          <!-- this button is hidden as we activate the according through input focus on the search text-->
+        </button>
+      </h2>
+      <div
+        id="panelsStayOpen-collapseOne"
+        class="accordion-collapse collapse"
+        aria-expanded="false"
+        ng-class="{'active': searchOption === 'card'}"
+      >
+        <div class="accordion-body">
+          <!-- <div class="row align-items-center"> -->
+          <div class="row g-3 align-items-start mb-3">
+            <!-- CMC Input -->
+            <div class="col-lg-auto">
+              <label for="cmc" class="form-label">CMC</label>
+              <input
+                type="number"
+                style="width: 70px"
+                class="form-control"
+                id="cmc"
+                ng-model="cmcValue"
+              />
+            </div>
+
+            <!-- Card Colors -->
+            <div class="col-lg flex-grow-1">
+              <div>
+                <label for="checkbokes" class="form-label">Card Colors</label>
+              </div>
+              <div id="checkbokes" class="d-flex flex-wrap gap-2">
+                <div
+                  class="form-check form-check-inline"
+                  ng-repeat="color in colors"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="color.label"
+                    ng-model="color.value"
+                    ng-change="toggle(colors, color.name, color.value)"
+                  />
+                  <label class="form-check-label" for="color.label"
+                    >{{color.label}}</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Rarity -->
+            <div class="col-lg flex-grow-1">
+              <div>
+                <label for="raritiesCheckboxes" class="form-label"
+                  >Rarity</label
+                >
+              </div>
+              <div id="raritiesCheckboxes" class="d-flex flex-wrap gap-2">
+                <div
+                  class="form-check form-check-inline"
+                  ng-repeat="rarity in rarities"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rarity.name"
+                    ng-model="rarity.value"
+                    ng-change="toggle(rarities, rarity.name, rarity.value)"
+                  />
+                  <label class="form-check-label" for="rarity.name"
+                    >{{rarity.label}}</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 align-items-start mb-3">
+            <!-- Super Types -->
+            <div class="col-lg flex-grow-1">
+              <div>
+                <label for="superTypesCheckboxes" class="form-label"
+                  >Super Types</label
+                >
+              </div>
+              <div id="superTypesCheckboxes" class="d-flex flex-wrap gap-2">
+                <div
+                  class="form-check form-check-inline"
+                  ng-repeat="superType in superTypes"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="superType.name"
+                    ng-model="superType.value"
+                    ng-change="toggle(superTypes, superType.name, superType.value)"
+                  />
+                  <label class="form-check-label" for="superType.name"
+                    >{{superType.label}}</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Types -->
+            <div class="col-lg flex-grow-1">
+              <div>
+                <label for="typesCheckboxes" class="form-label"
+                  >Card Types</label
+                >
+              </div>
+              <div id="typesCheckboxes" class="d-flex flex-wrap gap-2">
+                <div
+                  class="form-check form-check-inline"
+                  ng-repeat="type in types"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="type.name"
+                    ng-model="type.value"
+                    ng-change="toggle(types, type.name, type.value)"
+                  />
+                  <label class="form-check-label" for="type.name"
+                    >{{type.label}}</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub Types -->
+            <div class="col-lg flex-grow-1">
+              <div>
+                <label for="subTypesCheckboxes" class="form-label"
+                  >Sub Types</label
+                >
+              </div>
+              <div id="subTypesCheckboxes" class="d-flex flex-wrap gap-2">
+                <div
+                  class="form-check form-check-inline"
+                  ng-repeat="subType in subTypes"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="subType.name"
+                    ng-model="subType.value"
+                    ng-change="toggle(subTypes, subType.name, subType.value)"
+                  />
+                  <label class="form-check-label" for="subType.name"
+                    >{{subType.label}}</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
