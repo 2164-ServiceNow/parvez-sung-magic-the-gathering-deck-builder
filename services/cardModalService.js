@@ -8,7 +8,7 @@ angular
           if (card) { this.card = card }
         }
 
-        this.getCard = function() {
-          return this.card
-        }
-    })
+        this.getCard = function () {
+          return this.card;
+        };
+});

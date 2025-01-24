@@ -2,11 +2,13 @@
     <a href="/">
         <img src="//images.ctfassets.net/s5n2t79q9icq/3dB5uyWzUH95O1ZPBNNUX5/6cff7c65a809285755ea24b164b6ac65/magic-logo.png" alt="Magic The Gathering Logo" id="navbar-logo">
     </a>
-    <a href="/" class="navbar-link">Cards</a>
+    <a href="/" class="navbar-link"ng-click="switchSearch('card')">Cards</a>
     <a href="/keywords" class="navbar-link" ng-click="switchSearch('keywords')">Keywords</a>
-    <a href="/sets" class="navbar-link" ng-click="switchSearch()">Sets</a>
-    <a href="/favorites" class="navbar-link" ng-click="switchSearch()">Favorites</a>
-    <a href="/decks" class="navbar-link" ng-click="switchSearch()">Decks</a>
-    <a href="/playtest" class="navbar-link" ng-click="switchSearch()">Play</a>
+    <a href="/sets" class="navbar-link" ng-click="switchSearch('sets')">Sets</a>
+    <a href="/favorites" class="navbar-link" ng-click="switchSearch('favs')">Favorites</a>
+    <a href="/decks" class="navbar-link" ng-click="switchSearch('decks')">Decks</a>
+    <a href="/playtest" class="navbar-link" ng-click="switchSearch('playtest')">Play</a>
+
+    
 </div>
 

@@ -1,13 +1,23 @@
 angular.module("searchBar", []).component("searchbar", {
   templateUrl: "components/searchBar/searchBar.html",
-  controller: function SearchBarCtrl($scope, searchBarService) {
-    $scope.searchoption = "card";
+  controller: function SearchBarCtrl($scope, searchBarService) { // search bar Service is injected
+    $scope.searchoption = "card" || ''; // default for search option
+
+    // Watch for changes in search option and modify the search bar accordingly
+    $scope.$watch(
+      function () {
+        return searchBarService.getSearchOption(); // get the current search option
+      }, function (searchOption) {
+        $scope.searchoption = searchOption; // set the search option to the current search option
+      }
+    )
 
     $scope.searchValue = ""; // ng-model, default for search value
     $scope.pageNumber = 1; // default for page number
     $scope.pageSize = 20; // default for number of cards per page
     $scope.cmcValue = 1; // variable from cummulatie mana cost
 
+    // set the query to the default values valid for all searches and pagination 
     searchBarService.setQuery(
       `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`
     );
@@ -91,30 +101,35 @@ angular.module("searchBar", []).component("searchbar", {
       { label: "Squirrel", name: "Squirrel", value: false },
     ];
 
+    // function to toggle the search bar
     const searchInput = document.getElementById("searchValue");
     const filterCollapse = document.getElementById(
       "panelsStayOpen-collapseOne"
     );
+    // using accordian button to hid the search filter for the cards
     const accordianButton = document.getElementById("accordianButton");
+    // using search bar container to check if the search bar is active
     const searchBarContainer = document.getElementById("searchBarContainer");
 
     // filterCollapse.style.transition = "height 1s ease";
-
     document.addEventListener("click", function (event) {
-      if (!searchBarContainer.contains(event.target)) {
-        // filterCollapse.classList.remove('show');
-        if (filterActive) {
-          accordianButton.click();
-          filterActive = false;
-        }
+      if (!searchBarContainer.contains(event.target) && $scope.searchoption === 'card') {
+      if (filterActive) {
+        accordianButton.click(); // close the search filter
+        filterActive = false;
+      }
       }
     });
-    filterActive = false;
+
+    filterActive = false; //default value for filterActive
+    
     searchInput.addEventListener("focus", function (event) {
-      console.log("Search input has focus");
+      if ($scope.searchoption === 'card') {
+      
       if (!filterActive) {
         accordianButton.click();
         filterActive = true;
+      }
       }
     });
 
@@ -133,18 +148,21 @@ angular.module("searchBar", []).component("searchbar", {
 
     // function to toggle checkboxes
     $scope.toggle = function (array, name, value) {
-      console.log(array);
+      // If selectAll is checked, check all other checkboxes
       if (name === "selectAll" && value === true) {
         array.forEach((item) => {
           item.value = true;
         });
+      // If selectAll is unchecked, uncheck all other checkboxes
       } else if (name === "selectAll" && value === false) {
         array.forEach((item) => {
           item.value = false;
         });
+      // If any other checkbox is unchecked, uncheck selectAll
       } else if (name !== "selectAll" && value === false) {
         array[0].value = false;
       } else {
+        // If all other checkboxes are checked, check selectAll
         array
           .filter((item) => item.name !== "selectAll")
           .every((item) => item.value === true)
@@ -156,47 +174,55 @@ angular.module("searchBar", []).component("searchbar", {
     // The Search Function
     $scope.search = function () {
       // creating strings from selected checkboxes
+
+      // Join selected colors into a string
       $scope.selectedColorsQuery = $scope.joinArrayMembers($scope.colors);
+      // Join selected rarities into a string
       $scope.selectedRaritiesQuery = $scope.joinArrayMembers($scope.rarities);
+      // Join selected types into a string
       $scope.selectedTypesQuery = $scope.joinArrayMembers($scope.types);
+      // Join selected superTypes into a string
       $scope.selectedSuperTypesQuery = $scope.joinArrayMembers(
-        $scope.superTypes
+        $scope.superTypes // superTypes of cards include Basic, Legendary, Snow, World, Ongoing, Elite, Host, Saga
       );
+      // Join selected subTypes into a string
       $scope.selectedSubTypesQuery = $scope.joinArrayMembers($scope.subTypes);
 
+      // Create an array of query parts
       const queryParts = [
+        // Add search value if it exists
         $scope.searchValue.length > 0 ? `&name=${$scope.searchValue}` : "",
-        $scope.selectedColorsQuery.length > 0
-          ? `&colors=${$scope.selectedColorsQuery}`
-          : "",
-        $scope.selectedRaritiesQuery.length > 0
-          ? `&rarity=${$scope.selectedRaritiesQuery}`
-          : "",
-        $scope.selectedTypesQuery.length > 0
-          ? `&type=${$scope.selectedTypesQuery}`
-          : "",
-        $scope.selectedSuperTypesQuery.length > 0
-          ? `&supertypes=${$scope.selectedSuperTypesQuery}`
-          : "",
-        $scope.selectedSubTypesQuery.length > 0
-          ? `&subtypes=${$scope.selectedSubTypesQuery}`
-          : "",
+        // Add selected colors if they exist
+        $scope.selectedColorsQuery.length > 0? `&colors=${$scope.selectedColorsQuery}`: "",
+        // Add selected rarities if they exist
+        $scope.selectedRaritiesQuery.length > 0? `&rarity=${$scope.selectedRaritiesQuery}`: "",
+        // Add selected types if they exist
+        $scope.selectedTypesQuery.length > 0? `&type=${$scope.selectedTypesQuery}`: "",
+        // Add selected superTypes if they exist
+        $scope.selectedSuperTypesQuery.length > 0 ? `&supertypes=${$scope.selectedSuperTypesQuery}`: "",
+        // Add selected subTypes if they exist
+        $scope.selectedSubTypesQuery.length > 0? `&subtypes=${$scope.selectedSubTypesQuery}`: "",
+        // Add page number and page size
         `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`,
       ];
 
       // Join into one line and trim
       const finalQuery = queryParts.join("").trim();
 
+      // Set the query in the service
       searchBarService.setQuery(finalQuery);
 
-      // searchBarService.resetDetails();
+      
     };
 
+    // Watch for changes in search option and modify the search bar accordingly
     $scope.$watch(
       function () {
+        // get the current search option
         return searchBarService.getSearchOption();
       },
       function (searchOption) {
+        // set the search option to the current search option
         $scope.searchoption = searchOption;
       }
     );

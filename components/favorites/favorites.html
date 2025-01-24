@@ -3,6 +3,7 @@
   <div class="container my-4">
     <div id="removeFavAlert"></div>
     <div class="d-flex flex-wrap justify-content-start"> 
+      <!-- BOOSTRAP  card to display cards  -->
       <bootstrap-card
           ng-repeat="card in favorites track by $index"
           card="card"          
@@ -17,7 +18,9 @@
     </div>
   </div>
 </div>
+<!-- card details modal component to show details of a card -->
 <card-modal></card-modal>
+<!-- add to deck modal component to add a card to a deck -->
 <add-to-deck-modal
   modal-card="modalCard"
   decks="decks"

@@ -1,19 +1,23 @@
 angular.module("favorites", ["bootstrapCard"]).component("favorites", {
   templateUrl: "components/favorites/favorites.html",
-  controller: function ($scope, $rootScope, $window, deckService, favoriteService, cardModalService) {
+  //dependencies: cardModalService, deckService, favoriteService
+  controller: function ($scope, $rootScope, $window, deckService, favoriteService, cardModalService) {    
     // Add below for bootstrap-card, card-modal, and add-to-deck-modal.
     // Include $rootScope, deckService, favoriteService, cardModalService
-    $scope.imgPlaceHolder = "images/placeholderCard.jpg" // used when card.imageUrl is unavailable
-    $scope.modalCard = [] // Card to display on modal
-    $scope.decks = [] // List of decks
+    $scope.imgPlaceHolder = "images/placeholderCard.jpg"; // Placeholder image for cards which do not have an image
 
-    // Display card details on modal
+    // the card object that is passed to the modal
+    $scope.modalCard = [];
+    // the decks object that is passed to the modal
+    $scope.decks = [];
+
+    // show details for a card throug details modal
     $scope.cardDetails = function (card) {
       $scope.modalCard = card
       cardModalService.setCard(card)
     }
 
-    // Display deck menu and adding card to deck modal
+   // Display deck menu and adding card to deck modal
     $scope.openAddToDeckModal = function (card) {
       $scope.modalCard = card
       $scope.decks = deckService.getDecks()
@@ -24,13 +28,14 @@ angular.module("favorites", ["bootstrapCard"]).component("favorites", {
       $scope.favorties = favoriteService.addToFavorites(card)
     }
 
-    // Remove card from favorites list
-    $scope.removeFromFavorites = function (index) {
-      favoriteService.removeFromFavorites(index)
-      $scope.favorites = favoriteService.getFavorites()
-    }
 
-    // Add card to deck, update localStorage
+    // remove a card from the favorites
+    $scope.removeFromFavorites = function (index) {
+      favoriteService.removeFromFavorites(index);
+      $scope.favorites = favoriteService.getFavorites();
+    };
+
+    // add a card to a deck
     $scope.addToDeck = function (card, index) {
       if (!card || !index) {
           console.log("Error with card or index")
@@ -41,11 +46,11 @@ angular.module("favorites", ["bootstrapCard"]).component("favorites", {
       $scope.broadcastDecksChange()
     }
 
+
     // Alert components to deck list changing
     $scope.broadcastDecksChange = function() {
       $rootScope.$broadcast("decksChange")
     }
-    // Add everything above
 
     // If you need additional logic for initialization, add here
     this.$onInit = function () {

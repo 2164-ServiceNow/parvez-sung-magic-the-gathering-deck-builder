@@ -20,7 +20,6 @@ angular
       this.saveFavorites()
     }
 
-    // Saves decks array to localStorage
     this.saveFavorites=function() {
         $window.localStorage.setItem(
           "favorites",
@@ -31,6 +30,7 @@ angular
 
     // remove card object from favorites and localStorage
     this.removeFromFavorites = function(index){
+
         this.favorites = this.getFavorites()
         this.favorites.splice(index,1)
             this.saveFavorites()
