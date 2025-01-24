@@ -31,7 +31,7 @@ welcoming community for Magic: The Gathering enthusiasts.
     As a user, I can view the statistics of my deck and cards (such as mana costs or card types) so that I can judge what cards to add or remove from my deck as part of my strategy.
 6.  Favorite Cards: 
     As a user, I can favorite/save cards so that I can make and organize a wishlist.
-7.  Save and Revisit Deck
+7.  Save and Revisit Deck:
     As a user, I can save my deck's information so that I can come back to the deckbuilder if I ever want to view or edit my deck at a later time.
 8.  Playtest Mode: 
     As a user, I can simulate a playtest of my deck so that I can identify flaws or synergies by virtually playing with my cards. At the start of the playtest, the deck should shuffle, and I should draw a random 7-card starting hand.
