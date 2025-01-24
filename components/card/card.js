@@ -3,7 +3,15 @@ angular
 
   .component("card", {
     templateUrl: "components/card/card.html",
-    controller: function ($scope, $http, searchBarService, deckService) {
+    controller: function (
+      $scope,
+      $http,
+      searchBarService,
+      deckService,
+      favoriteService,
+      deckService,
+      cardModalService
+    ) {
       $scope.cards = "";
       $scope.cardDetails = "";
       $scope.pageLink = "";
@@ -11,6 +19,8 @@ angular
       $scope.imgPlaceHolder = "images/placeholderCard.jpg";
       $scope.modalCard = [];
       $scope.decks = [];
+
+      
 
       $scope.$watch(
         function () {
@@ -30,8 +40,13 @@ angular
         }
       );
 
+      $scope.addtoFav = function (card) {
+        $scope.favorties = favoriteService.addToFavorites(card);
+      };
+
       $scope.details = function (cardDetails) {
         $scope.cardDetails = cardDetails;
+        cardModalService.setCard(cardDetails)
         console.log(cardDetails);
       };
 
@@ -77,6 +92,7 @@ angular
 
       $scope.cardDetails = function (card) {
         $scope.modalCard = card;
+        cardModalService.setCard(card)
       };
 
       $scope.openAddToDeckModal = function (card) {
@@ -90,10 +106,10 @@ angular
         deckService.addToDeck(modalCard, index);
         console.log(`after adding card :${deckService.getDecks()}`);
       };
-      
-      $scope.setDeckIndex=function(index){
+
+      $scope.setDeckIndex = function (index) {
         $scope.deckIndex = index;
         console.log(`Deck index ${$scope.deckIndex}`);
-      }
+      };
     },
   });

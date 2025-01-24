@@ -1,0 +1,23 @@
+<div class="card m-2" style="width: 18rem">
+    <img ng-src="{{card.imageUrl || imgPlaceholder}}" class="card-img-top" alt="Card image" />
+    <div class="card-body">
+        <h5 class="card-title">{{card.name}}</h5>
+        <p class="card-text" ng-bind-html="(card.originalText || card.text) | newlineText"></p>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal" data-toggle="tooltip"
+            data-placement="top" title="See More Details" ng-click="onDetails({ card: card })">
+            &#8505;
+        </button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addToDeckModal" data-toggle="tooltip"
+            data-placement="top" title="Add to a Deck" ng-click="onAddToDeck({ card: card })">+</button>
+        <button ng-show="{{cardDisplayType === 'decks'}}" class="btn btn-danger"
+            ng-click="removeFromDeck({ index: index  })" data-toggle="tooltip" data-placement="top"
+            title="Remove from Deck">-</button>
+        <button ng-show="{{cardDisplayType !== 'favs' }}" class="btn btn-primary" ng-click="onFavorites({ card: card })"
+            title="Add to Favorites">
+            &hearts;
+        </button>
+        <button id="removeFavButton" ng-show="{{cardDisplayType === 'favs'}}" class="btn btn-danger"
+            ng-click="removeFromFavorites({ index: index  })" data-toggle="tooltip" data-placement="top"
+            title="Remove from Favorites">-</button>
+    </div>
+</div>
