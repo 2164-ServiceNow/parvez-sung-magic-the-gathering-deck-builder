@@ -52,7 +52,6 @@ angular.module('deck', [])
                 cards: cards
             }
             $scope.decks.push(newDeck) 
-            console.log($scope.decks)
 
             saveDecks() // push deck list to localStorage
             $scope.clearDeckScope()
@@ -62,7 +61,6 @@ angular.module('deck', [])
         $scope.selectDeck = function(index, deck) {
             $scope.selectedDeck = deck
             $scope.selectedDeckIndex = index
-            console.log("Index: " + $scope.selectedDeckIndex)
             $scope.getDeckStatistics(index)
         }
 
@@ -78,7 +76,6 @@ angular.module('deck', [])
             $window.localStorage.removeItem('decks')
             $scope.decks = []
             $scope.clearDeckScope()
-            console.log("Decks in localStorage cleared")
         }
 
         // delete selected deck from localStorage
@@ -86,18 +83,15 @@ angular.module('deck', [])
             $scope.decks.splice($scope.selectedDeckIndex, 1)
             $scope.clearDeckScope()
             saveDecks()
-            console.log("Deck deleted", $scope.decks)
         }
 
         // rename selected deck in localStorage
         $scope.renameSelectDeck = function(name) {
             $scope.renameSelectDeckName = name
-            console.log("RENAME " + $scope.renameSelectDeckName)
             if ($scope.selectedDeck && $scope.renameSelectDeckName.trim() !== '') {
                 $scope.selectedDeck.name = $scope.renameSelectDeckName.trim()
                 $scope.decks[$scope.selectedDeckIndex] = $scope.selectedDeck
                 saveDecks()
-                console.log("RENAME", $scope.renameSelectDeckName)
             }
         }
 
@@ -136,7 +130,6 @@ angular.module('deck', [])
                         $scope.createDeck(deck.name, deck.color, deck.cards)
                         $scope.clearDeckScope()
                         $scope.$apply()
-                        console.log("Deck uploaded.")
                     } else {
                         console.error("Invalid deck file.")
                     }
@@ -157,8 +150,6 @@ angular.module('deck', [])
 
         // Removes a card from the deck as indicated by its index in the deck list
         $scope.removeFromDeck = function(index) {
-            console.log("Index " + index)
-            console.log("Deck Index " + $scope.selectedDeckIndex)
             deckService.removeFromDeck(index, $scope.selectedDeckIndex)
             $scope.decks = deckService.getDecks()
         }
@@ -172,9 +163,7 @@ angular.module('deck', [])
 
         // Gets deck statistics to display on deck details
         $scope.getDeckStatistics = function(index) {
-            console.log("Calling getDeckStatistics")
             $scope.selectedDeckStatistics = deckService.getDeckStatistics(index)
-            console.log($scope.selectedDeckStatistics)
         }
 
         // Orders the bars in the rarity graph by least rare to most rare
@@ -208,7 +197,6 @@ angular.module('deck', [])
         // Remove card from favorites list
         $scope.removeFromFavorites = function (index) {
         favoriteService.removeFromFavorites(index)
-        console.log(`index == ${index}`)  
         $scope.favorites = favoriteService.getFavorites()
         }
 
@@ -220,7 +208,6 @@ angular.module('deck', [])
         }
         deckService.addToDeck(card, index)
         $scope.decks = deckService.getDecks() || []
-        console.log(`Modal Adding card to deck: ${deckService.getDecks()}`)
         $scope.broadcastDecksChange()
         }
 

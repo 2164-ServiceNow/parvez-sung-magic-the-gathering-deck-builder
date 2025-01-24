@@ -20,7 +20,6 @@ angular.module('playtest', [])
                 $scope.selectDeck = JSON.parse(deck)
                 $scope.selectDeckCards = $scope.selectDeck.cards
                 $scope.hand = 7
-                console.log($scope.selectDeckCards)
             }
 
             // Randomize cards in deck and draw new hand of 7 cards

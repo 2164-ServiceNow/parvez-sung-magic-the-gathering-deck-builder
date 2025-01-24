@@ -63,7 +63,6 @@ angular
       $scope.details = function (cardDetails) {
         $scope.cardDetails = cardDetails;
         cardModalService.setCard(cardDetails);
-        console.log(cardDetails);
       };
 
       // remove card from favorites

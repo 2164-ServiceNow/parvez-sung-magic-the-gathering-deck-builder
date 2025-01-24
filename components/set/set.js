@@ -30,7 +30,6 @@ angular.module('set', [])
 			// User selects a set and html will show more details about the set
 			$scope.details = function (setDetails) {
 				$scope.setDetails = setDetails
-				console.log(setDetails)
 			}
 
 			// Pulls a booster out of a set using MTG API
@@ -40,7 +39,6 @@ angular.module('set', [])
 				$http.get(`https://api.magicthegathering.io/v1/sets/${setCode}/booster`)
 					.then((response) => {
 						$scope.booster = response.data;
-						console.log(response.data)
 					})
 					.catch((error) => {
 						$scope.booster = 'error';
