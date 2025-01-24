@@ -1,3 +1,4 @@
+<!-- This modal is displayed when the Add to Deck button on bootstrapCard is clicked, has a select form to pick a deck to add to -->
 <div class="modal fade" id="addToDeckModal" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -12,14 +13,15 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <div ng-if="decks && decks.length > 0">
-                    <label for="deckList" class="form-label">Select your Deck {{selectedDeckIndex}}</label>
+                    <label for="deckList" class="form-label">Select your Deck</label>
                     <select class="form-select" aria-label="Select Deck" id="deckList" ng-model="selectedDeckIndex"
-                        ng-options="index as deck.name for (index, deck) in decks track by index">
+                        ng-options="index as deck.name for (index, deck) in decks track by index" ng-change="resetAddToDeckCount()">
                         <option value="" disabled selected>Select a Deck</option>
                     </select>
                     <button for="deckList" class="btn btn-primary mt-3" ng-click="handleAddToDeck(selectedDeckIndex)" ng-disabled="selectedDeckIndex === null">
                         Add to Deck
                     </button>
+                    <p class="mt-1">({{modalCard.name}} added: {{addToDeckCount}})</p>
                 </div>
             </div>
 

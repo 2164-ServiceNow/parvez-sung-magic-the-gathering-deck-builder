@@ -1,4 +1,5 @@
 <div class="container-lg">
+    <!-- Deck Menu, User chooses deck to play with -->
     <div class="col">
         <label for="deckMenu" class="form-label">Select Your Deck</label>
         <select 
@@ -12,6 +13,7 @@
         </select>
       </div>
       <br/>
+      <!-- Shows deck, card count, shuffle button, draw button, and cards in hand -->
       <div ng-if="selectDeck.length !== 0 && selectDeckCards.length !== 0">
         <h3 class="text-center" style="width: 8.5rem;" ng-hide="hand >= selectDeckCards.length">Cards: {{selectDeckCards.length - hand}}</h3>
         <h3 class="text-center" style="width: 8.5rem;" ng-show="hand >= selectDeckCards.length">Cards: 0</h3>
@@ -26,6 +28,7 @@
         <img class="card shadow-lg me-3 img-fluid" style="width: 8.5rem;" ng-if="selectDeck.length !== 0 && selectDeckCards.length !== 0" 
         ng-repeat="card in selectDeckCards | limitTo: hand track by $index" src="{{card.imageUrl || imgPlaceHolder}}" class="rounded float-start" alt="{{card.name}}" title="{{card.name}}">
       </div>
+      <!-- Message if deck is invalid -->
       <div ng-if="selectDeck.length === 0 || selectDeckCards.length === 0">
         PLEASE SELECT A DECK WITH AT LEAST 1 CARD
       </div>

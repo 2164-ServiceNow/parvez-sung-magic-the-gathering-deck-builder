@@ -102,6 +102,6 @@ angular.module('keywords', [])
         // Reset values
         $scope.$on('resetDetails', function() {
             $scope.selectKeyword = ""
-        });
+        })
 	}
 })
