@@ -9,19 +9,23 @@ angular.module('set', [])
 			$scope.cardDetails = "" // If user selects a card from opening a booster, contains an object of the card's details
 			$scope.pageLink = "";
 			$scope.currentPage = "";
+			$scope.imgPlaceHolder = "images/placeholderCard.jpg";
 
 			// If searchbar query changes, call http.get with new query and save response to $scope.sets
 			$scope.$watch(function () {
-				return searchBarService.getQuery()
-			}, function (newQuery) {
-				$scope.searchValue = newQuery
-
+				return searchBarService.getQuery();
+			  }, function (newQuery) {
+				$scope.searchValue = newQuery;
+			  
 				$http.get(`https://api.magicthegathering.io/v1/sets?name=${newQuery}`)
-					.then((response) => {
-						$scope.sets = response.data;
-						console.log($scope.sets)
-					})
-			})
+				  .then((response) => {
+					$scope.sets = response.data;
+					$scope.parseLinkHeader(response.headers('Link')); // Parse pagination links
+				  }).catch((error) => {
+					console.error('Error fetching sets:', error);
+				  });
+			  });
+			  
 
 			// User selects a set and html will show more details about the set
 			$scope.details = function (setDetails) {
@@ -65,44 +69,37 @@ angular.module('set', [])
 
 			// Function to get links from header response
 			$scope.parseLinkHeader = function (linkHeader) {
-				if (!linkHeader) return {};
-
-				const links = [];
+				if (!linkHeader) return;
+			  
 				const parts = linkHeader.split(',');
-
 				parts.forEach(part => {
-					let section = part.split(';');
-					if (section.length < 2) return;
-
-					// Remove angle brackets < >
-					let link = section[0].replace(/<(.*)>/, '$1').trim();
-					let name = section[1].replace(/rel="(.*)"/, '$1').trim();
-
-					if (name === 'first') $scope.firstPage = link;
-					else if (name === 'prev') $scope.previousPage = link;
-					else if (name === 'next') $scope.nextPage = link;
-					else if (name === 'last') $scope.lastPage = link;
-
+				  let section = part.split(';');
+				  if (section.length < 2) return;
+			  
+				  let link = section[0].replace(/<(.*)>/, '$1').trim();
+				  let rel = section[1].replace(/rel="(.*)"/, '$1').trim();
+			  
+				  // Assign links to their corresponding variables
+				  if (rel === 'first') $scope.firstPage = link;
+				  if (rel === 'prev') $scope.previousPage = link;
+				  if (rel === 'next') $scope.nextPage = link;
+				  if (rel === 'last') $scope.lastPage = link;
 				});
-				console.log(links);
-				return links;
-			}
-
-			// Function to change pages of set list from MTG API
-			$scope.goToPage = function (pageLink) {
+			  
+				
+			  };
+			  
+			  $scope.goToPage = function (pageLink) {
 				if (!pageLink) return;
-				$scope.firstPage = '';
-				$scope.prevPage = '';
-				$scope.nextPage = '';
-				$scope.lastPage = '';
-				console.log(`going to: ${pageLink}`);
-				$http
-					.get(pageLink)
-					.then((response) => {
-						$scope.cards = response.data;
-						$scope.parseLinkHeader(response.headers('Link'));
-					});
-			}
+			 	
+				$http.get(pageLink).then((response) => {
+				  $scope.sets = response.data; // Update sets
+				  $scope.parseLinkHeader(response.headers('Link')); // Parse new pagination links
+				}).catch((error) => {
+				  console.error('Error navigating to page:', error);
+				});
+			  };
+			  
 
 			$scope.imgPlaceHolder = "images/placeholderCard.jpg";
 			$scope.modalCard = [];
@@ -124,7 +121,6 @@ angular.module('set', [])
 
 			$scope.removeFromFavorites = function (index) {
 				favoriteService.removeFromFavorites(index);
-				console.log(`index == ${index}`);
 				$scope.favorites = favoriteService.getFavorites();
 			};
 
@@ -135,7 +131,6 @@ angular.module('set', [])
 				}
 				deckService.addToDeck(card, index)
 				$scope.decks = deckService.getDecks() || []
-				console.log(`Modal Adding card to deck: ${deckService.getDecks()}`)
 				$scope.broadcastDecksChange()
 			}
 

@@ -16,10 +16,8 @@ angular
       this.favorites = this.getFavorites();
       this.favorites.push(card);
       this.saveFavorites();
-    //   console.log(this.favorites);
     }
 
-    // Saves decks array to localStorage
     this.saveFavorites=function() {
         $window.localStorage.setItem(
           "favorites",
@@ -33,6 +31,5 @@ angular
         this.favorites.splice(index,1);
             this.saveFavorites();
             
-            // console.log(favoriteService.getFavorites());
     }
 });

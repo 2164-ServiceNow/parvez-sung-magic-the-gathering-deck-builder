@@ -1,41 +1,50 @@
 <div class="container-lg">
   <div class="container my-4">
     <div class="d-flex flex-wrap justify-content-center m-2">
-      <div idng-if="cards.cards && cards.cards.length > 1 ">
-        <div id="pages">
-          <label for="pages" class="form-label">Pages </label>
+      <!-- if we have cards then we show pagination -->
+      <div ng-if="cards.cards && cards.cards.length > 1 ">
+        <div id="pages" ng-if="cards !== undefined || cards.cards.length>1" >
+          
+          <!-- First Button -->
           <button
-            class="btn btn-primary"
-            ng-if="firstPage !==''"
+            class="btn btn-primary me-2"
+            ng-disabled="!firstPage"
             ng-click="goToPage(firstPage)"
           >
-            first
+            First
           </button>
+
+          <!-- Previous Button -->
           <button
-            class="btn btn-primary"
-            ng-if="previousPage!=='' && previousPage!==firstPage"
+            class="btn btn-primary m-2"
+            ng-disabled="!previousPage"
             ng-click="goToPage(previousPage)"
           >
-            previous
+            Previous
           </button>
+
+          <!-- Next Button -->
           <button
-            class="btn btn-primary"
-            ng-if="nextPage!==''"
+            class="btn btn-primary me-2"
+            ng-disabled="!nextPage"
             ng-click="goToPage(nextPage)"
           >
-            next
+            Next
           </button>
+
+          <!-- Last Button -->
           <button
-            class="btn btn-primary"
-            ng-if="lastPage!==''"
+            class="btn btn-primary me-2"
+            ng-disabled="!lastPage"
             ng-click="goToPage(lastPage)"
           >
-            last
+            Last
           </button>
         </div>
       </div>
       <br /><br />
       <div class="d-flex flex-wrap justify-content-start">
+      <!-- A bootstrap card as an angular directive to display cards in the cards page -->
         <bootstrap-card
           ng-repeat="card in cards.cards"
           card="card"
@@ -46,85 +55,58 @@
           card-display-type="cards"
         ></bootstrap-card>
       </div>
+
+    <!-- show pagination at the bottom of the page for cards -->
+    <div id="pages1" ng-if="cards !== undefined || cards.cards.length>1" >
+      <!-- First Button -->
+      <button
+      class="btn btn-primary me-2"
+      ng-disabled="!firstPage"
+      ng-click="goToPage(firstPage)"
+    >
+      First
+    </button>
+    <!-- Previous Button -->
+    <button
+      class="btn btn-primary m-2"
+      ng-disabled="!previousPage"
+      ng-click="goToPage(previousPage)"
+    >
+      Previous
+    </button>
+
+    <!-- Next Button -->
+    <button
+      class="btn btn-primary me-2"
+      ng-disabled="!nextPage"
+      ng-click="goToPage(nextPage)"
+    >
+      Next
+    </button>
+
+    <!-- Last Button -->
+    <button
+      class="btn btn-primary me-2"
+      ng-disabled="!lastPage"
+      ng-click="goToPage(lastPage)"
+    >
+      Last
+    </button>
     </div>
-  </div>
+    </div>
 
   <!-- div to show if there are not cards matching the search -->
   <div ng-if="cards === undefined || 1 >= cards.cards.length">
     <p>NOT FOUND IN DATABASE</p>
   </div>
 </div>
+</div>
+</div>
 
+<!-- card details modal -->
 <card-modal></card-modal>
-<!-- 
-Modal for Card Details
-<div
-  class="modal fade"
-  id="cardModal"
-  tabindex="-1"
-  aria-labelledby="cardModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      Modal Header
-      <div class="modal-header">
-        <h5 class="modal-title" id="cardModalLabel">{{modalCard.name}}</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
 
-      Modal Body
-      <div class="modal-body">
-        Cards List
-
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img
-              src="{{modalCard.imageUrl || imgPlaceHolder}}"
-              class="img-fluid rounded-start"
-              alt="{{card.name}}"
-            />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{modalCard.name}}</h5>
-              <p class="card-text">{{modalCard.originalText}}</p>
-              <p class="card-text">{{modalCard.flavor}}</p>
-              <h5 class="card-title">Power: {{modalCard.power}}</h5>
-              <p class="card-text">
-                Super Type: {{modalCard.superTypes}}, Card Type:
-                {{modalCard.type}}, Sub Type: {{modalCard.subTypes}}
-              </p>
-              <p class="card-text">Rarity: {{modalCard.rarity}}</p>
-              <p class="card-text">CMC: {{modalCard.cmc}}</p>
-              <p class="card-text">Mana Cost: {{modalCard.manaCost}}</p>
-              <p class="card-text">
-                <small class="text-body-secondary"
-                  >Last updated 25 mins ago</small
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-
-        End of Cards List
-      </div>
-
-      Modal Footer
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
+<!-- add to deck modal that adds cards -->
 <add-to-deck-modal
   modal-card="modalCard"
   decks="decks"
