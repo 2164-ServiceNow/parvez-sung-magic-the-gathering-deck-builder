@@ -23,14 +23,19 @@ angular.module('playtest', [])
             }
 
             // Randomize cards in deck and draw new hand of 7 cards
-            $scope.shuffle = function(){
-                for (let i = $scope.selectDeckCards.length - 1; i > 0; i--) {
-                    const randomIndex = Math.floor(Math.random() * (i + 1))
-                    [$scope.selectDeckCards[i], $scope.selectDeckCards[randomIndex]] = [$scope.selectDeckCards[randomIndex], $scope.selectDeckCards[i]]
+            $scope.shuffle = function() {
+                let currentIndex = $scope.selectDeckCards.length;
+              
+                while (currentIndex != 0) {
+                  let randomIndex = Math.floor(Math.random() * currentIndex);
+                  currentIndex--;
+              
+                  [$scope.selectDeckCards[currentIndex], $scope.selectDeckCards[randomIndex]] = [
+                    $scope.selectDeckCards[randomIndex], $scope.selectDeckCards[currentIndex]];
                 }
+
                 $scope.hand = 7
-                return $scope.selectDeckCards
-            }
+              }
 
             // Draw a card from the selected deck
             $scope.drawCard = function(){
