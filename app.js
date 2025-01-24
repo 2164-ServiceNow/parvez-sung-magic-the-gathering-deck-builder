@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'keywordListPage', 'favoritePage','searchBar', 'card', 'set', 'deck', 'keywords','navbar', 'cardModal','favorites', 'bootstrapCard', 'addToDeckModal'])
+angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListPage', 'keywordListPage', 'favoritePage', 'playtestPage','searchBar', 'card', 'set', 'deck', 'keywords','navbar', 'cardModal','favorites', 'playtest', 'bootstrapCard', 'addToDeckModal'])
 .config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
@@ -13,8 +13,6 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListP
         })
         .when("/favorites", {
             templateUrl: "pages/favoritesPage/favoritesPage.html",
-            // controller: 'favoriteCtrl'
-            
         })
         .when("/sets", {
             templateUrl: "pages/setListPage/setListPage.html",
@@ -26,7 +24,10 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListP
         .when("/keywords", {
             templateUrl: "pages/keywordListPage/keywordListPage.html",
             controller: "keywordsCtrl"
-        });
+        })
+        .when("/playtest", {
+            templateUrl: "pages/playtestPage/playtestPage.html",
+        })
 
     $locationProvider.html5Mode({
         enabled: true,

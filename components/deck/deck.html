@@ -121,27 +121,6 @@
             </div> 
         </div>
     </div>
-    <!-- <div class="d-flex flex-wrap justify-content-start">
-        <div class="card m-2" ng-repeat="card in selectedDeck.cards track by $index" ng-model="cards"
-            style="width: 18rem">
-            <img ng-src="{{card.imageUrl || imgPlaceHolder}}" class="" alt="Card image" />
-            <div class="card-body">
-                <h5 class="card-title">{{card.name}}</h5>
-                <p class="card-text" ng-bind-html="(card.originalText || card.text) | newlineText" style="white-space: pre-wrap;"></p>
-                <button class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal"
-                    ng-click="setCardDetails(card)">
-                    ⌕
-                </button>
-                <button class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cardModal1"
-                    ng-click="setCardDetails(card)">
-                    +
-                </button>
-                <button class="btn btn-primary" class="btn btn-primary" ng-click="removeFromDeck($index)" style="background-color: red;">
-                    -
-                </button>
-            </div>
-        </div>
-    </div> -->
     <div class="d-flex flex-wrap justify-content-start">
         <bootstrap-card
         ng-repeat="card in selectedDeck.cards track by $index"

@@ -1,0 +1,32 @@
+<div class="container-lg">
+    <div class="col">
+        <label for="deckMenu" class="form-label">Select Your Deck</label>
+        <select 
+          class="form-select" 
+          aria-label="List of Available Decks" 
+          id="deckMenu" 
+          ng-model="selectDeck"
+          ng-change="changeDeck(selectDeck)">
+          <option value="" disabled selected>Select a Deck</option>
+          <option ng-repeat="deck in decks" value = '{{deck}}'>{{deck.name}}</option>
+        </select>
+      </div>
+      <br/>
+      <div ng-if="selectDeck.length !== 0 && selectDeckCards.length !== 0">
+        <h3 class="text-center" style="width: 8.5rem;" ng-hide="hand >= selectDeckCards.length">Cards: {{selectDeckCards.length - hand}}</h3>
+        <h3 class="text-center" style="width: 8.5rem;" ng-show="hand >= selectDeckCards.length">Cards: 0</h3>
+        <img ng-hide="hand >= selectDeckCards.length" class="card shadow-lg me-4 mb-2 img-fluid" style="width: 8.5rem;" src="{{imgPlaceHolder}}" class="rounded float-start" alt="Deck Library">
+        <button class="btn btn-primary mt-2 mb-2" style="width: 8.5rem;" ng-click="shuffle()">Shuffle</button>
+        <div>
+            <button ng-hide="hand >= selectDeckCards.length" class="btn btn-primary mt-2 mb-2" style="width: 8.5rem;" ng-click="drawCard()">Draw</button>
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex flex-wrap justify-content-start">
+        <img class="card shadow-lg me-3 img-fluid" style="width: 8.5rem;" ng-if="selectDeck.length !== 0 && selectDeckCards.length !== 0" 
+        ng-repeat="card in selectDeckCards | limitTo: hand track by $index" src="{{card.imageUrl || imgPlaceHolder}}" class="rounded float-start" alt="{{card.name}}" title="{{card.name}}">
+      </div>
+      <div ng-if="selectDeck.length === 0 || selectDeckCards.length === 0">
+        PLEASE SELECT A DECK WITH AT LEAST 1 CARD
+      </div>
+</div>
