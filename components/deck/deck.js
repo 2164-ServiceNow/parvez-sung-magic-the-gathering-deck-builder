@@ -25,7 +25,7 @@ angular.module('deck', [])
 })
 .component('deck', {
 	templateUrl: 'components/deck/deck.html',
-	controller: function($scope, $rootScope, $window, deckService, cardModalService){
+	controller: function($scope, $rootScope, $window, deckService, cardModalService, favoriteService){
 		$scope.decks = JSON.parse($window.localStorage.getItem('decks')) || [] // Grab deck object list from localStorage, else empty array
         $scope.newDeckName = "New Deck" // user text input for created deck's name
         $scope.renameSelectDeckName = "" // user text input for renaming deck's name
@@ -155,17 +155,12 @@ angular.module('deck', [])
             reader.readAsText(deckFile)
         })
 
-        // Sets card details to display on card modal
-        $scope.setCardDetails = function(card) {
-            console.log(card)
-            cardModalService.setCard(card)
-        }
-
         // Removes a card from the deck as indicated by its index in the deck list
         $scope.removeFromDeck = function(index) {
             console.log("Index " + index)
             console.log("Deck Index " + $scope.selectedDeckIndex)
             deckService.removeFromDeck(index, $scope.selectedDeckIndex)
+            $scope.decks = deckService.getDecks()
         }
 
         // Recieves signal that deck(s) has updated and needs to be updated live on the decks page
@@ -187,5 +182,46 @@ angular.module('deck', [])
             const order = ["Common", "Uncommon", "Rare", "Mythic"]
             return order.indexOf(rarity) !== -1 ? order.indexOf(rarity) : order.length
         }
+
+        // Add below for bootstrap-card, card-modal, and add-to-deck-modal.
+        // Include $rootScope, deckService, favoriteService, cardModalService
+        $scope.imgPlaceHolder = "images/placeholderCard.jpg";
+        $scope.modalCard = [];
+
+        $scope.cardDetails = function (card) {
+        $scope.modalCard = card;
+        cardModalService.setCard(card)
+        };
+
+        $scope.openAddToDeckModal = function (card) {
+        $scope.modalCard = card;
+        $scope.decks = deckService.getDecks();
+        };
+
+        $scope.addtoFav = function (card) {
+        $scope.favorties = favoriteService.addToFavorites(card);
+        };
+
+        $scope.removeFromFavorites = function (index) {
+        favoriteService.removeFromFavorites(index);
+        console.log(`index == ${index}`);  
+        $scope.favorites = favoriteService.getFavorites();
+        };
+
+        $scope.addToDeck = function (card, index) {
+        if (!card || !index) {
+            console.log("Error with card or index")
+            return
+        }
+        deckService.addToDeck(card, index)
+        $scope.decks = deckService.getDecks() || []
+        console.log(`Modal Adding card to deck: ${deckService.getDecks()}`)
+        $scope.broadcastDecksChange()
+        }
+
+        $scope.broadcastDecksChange = function() {
+        $rootScope.$broadcast("decksChange");
+        }
+        // Add everything above
 	}
 })

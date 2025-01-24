@@ -10,7 +10,7 @@ angular
       deckService,
       favoriteService,
       deckService,
-      $window
+      cardModalService
     ) {
       $scope.cards = "";
       $scope.cardDetails = "";
@@ -46,6 +46,7 @@ angular
 
       $scope.details = function (cardDetails) {
         $scope.cardDetails = cardDetails;
+        cardModalService.setCard(cardDetails)
         console.log(cardDetails);
       };
 
@@ -91,6 +92,7 @@ angular
 
       $scope.cardDetails = function (card) {
         $scope.modalCard = card;
+        cardModalService.setCard(card)
       };
 
       $scope.openAddToDeckModal = function (card) {
@@ -109,7 +111,5 @@ angular
         $scope.deckIndex = index;
         console.log(`Deck index ${$scope.deckIndex}`);
       };
-
-      // $scope.addToFavorites = function (card) {};
     },
   });

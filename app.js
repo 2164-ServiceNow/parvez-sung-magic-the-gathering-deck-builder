@@ -22,7 +22,6 @@ angular.module("magicApp", ['ngRoute', 'cardListPage', 'setListPage', 'deckListP
         })
         .when("/decks", {
             templateUrl: "pages/deckListPage/deckListPage.html",
-            controller: 'decksCtrl'
         })
         .when("/keywords", {
             templateUrl: "pages/keywordListPage/keywordListPage.html",

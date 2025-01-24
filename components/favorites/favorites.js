@@ -1,21 +1,48 @@
-angular.module("favorites", []).component("favorites", {
+angular.module("favorites", ["bootstrapCard"]).component("favorites", {
   templateUrl: "components/favorites/favorites.html",
-  controller: function ($scope, $window, favoriteService) {
+  controller: function ($scope, $rootScope, $window, deckService, favoriteService, cardModalService) {
     // const vm = this;
+    // Add below for bootstrap-card, card-modal, and add-to-deck-modal.
+    // Include $rootScope, deckService, favoriteService, cardModalService
     $scope.imgPlaceHolder = "images/placeholderCard.jpg";
+    $scope.modalCard = [];
+    $scope.decks = [];
 
-    $scope.removeFromFavorites = function (index) {
-      favoriteService.removeFromFavorites(index);
-      console.log(`index == ${index}`);  
-      $scope.favorites = favoriteService.getFavorites();
-        
-        
+    $scope.cardDetails = function (card) {
+      $scope.modalCard = card;
+      cardModalService.setCard(card)
+    };
 
+    $scope.openAddToDeckModal = function (card) {
+      $scope.modalCard = card;
+      $scope.decks = deckService.getDecks();
     };
 
     $scope.addtoFav = function (card) {
       $scope.favorties = favoriteService.addToFavorites(card);
     };
+
+    $scope.removeFromFavorites = function (index) {
+      favoriteService.removeFromFavorites(index);
+      console.log(`index == ${index}`);  
+      $scope.favorites = favoriteService.getFavorites();
+    };
+
+    $scope.addToDeck = function (card, index) {
+      if (!card || !index) {
+          console.log("Error with card or index")
+          return
+      }
+      deckService.addToDeck(card, index)
+      $scope.decks = deckService.getDecks() || []
+      console.log(`Modal Adding card to deck: ${deckService.getDecks()}`)
+      $scope.broadcastDecksChange()
+    }
+
+    $scope.broadcastDecksChange = function() {
+      $rootScope.$broadcast("decksChange");
+    }
+    // Add everything above
 
     // If you need additional logic for initialization, add here
     this.$onInit = function () {
@@ -24,25 +51,5 @@ angular.module("favorites", []).component("favorites", {
         JSON.parse($window.localStorage.getItem("favorites")) || [];
       console.log("Favorites loaded:", $scope.favorites);
     };
-
-    // const alertPlaceholder = document.getElementById("removeFavAlert");
-    // const appendAlert = (message, type) => {
-    //   const wrapper = document.createElement("div");
-    //   wrapper.innerHTML = [
-    //     `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-    //     `   <div>${message}</div>`,
-    //     '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-    //     "</div>",
-    //   ].join("");
-
-    //   alertPlaceholder.append(wrapper);
-    // };
-
-    // const alertTrigger = document.getElementById("removeFavButton");
-    // if (alertTrigger) {
-    //   alertTrigger.addEventListener("click", () => {
-    //     appendAlert("A card has been removed from Favorites", "success");
-    //   });
-    // }
   },
 });
