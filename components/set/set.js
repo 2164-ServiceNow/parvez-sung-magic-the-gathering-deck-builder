@@ -10,6 +10,17 @@ angular.module('set', [])
 			$scope.pageLink = "";
 			$scope.currentPage = "";
 			$scope.imgPlaceHolder = "images/placeholderCard.jpg";
+			
+
+			$scope.singlePage = false;
+      		$scope.totalCount = 0;
+
+			$scope.$watch(
+				function () {
+				  return searchBarService.getPageSize();
+				},function(pageSize){
+				  $scope.pageSize = pageSize;
+				});
 
 			// If searchbar query changes, call http.get with new query and save response to $scope.sets
 			$scope.$watch(function () {
@@ -20,7 +31,10 @@ angular.module('set', [])
 				$http.get(`https://api.magicthegathering.io/v1/sets?name=${newQuery}`)
 				  .then((response) => {
 					$scope.sets = response.data;
-					$scope.parseLinkHeader(response.headers('Link')); // Parse pagination links
+					$scope.parseLinkHeader(response.headers('Link')); // Parse pagination links					
+					$scope.totalCount = Number(response.headers("Total-Count"));
+	  				$scope.singlePage = $scope.totalCount < Number($scope.pageSize);
+
 				  }).catch((error) => {
 					console.error('Error fetching sets:', error);
 				  });
@@ -93,6 +107,8 @@ angular.module('set', [])
 				$http.get(pageLink).then((response) => {
 				  $scope.sets = response.data; // Update sets
 				  $scope.parseLinkHeader(response.headers('Link')); // Parse new pagination links
+				  $scope.totalCount = Number(response.headers("Total-Count"));
+	  			  $scope.singlePage = $scope.totalCount < $scope.pageSize;
 				}).catch((error) => {
 				  console.error('Error navigating to page:', error);
 				});

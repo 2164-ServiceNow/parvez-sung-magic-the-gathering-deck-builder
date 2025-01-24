@@ -34,10 +34,10 @@ angular
 
       //
       $scope.singlePage = false;
+      $scope.totalCount = 0;
 
       $scope.$watch(
         function () {
-          // get search query
           return searchBarService.getPageSize();
         },function(pageSize){
           $scope.pageSize = pageSize;
@@ -64,15 +64,10 @@ angular
               // parse pagination links
               $scope.parseLinkHeader(response.headers("Link"));
 
-              $scope.totalCount = response.headers("Total-Count");
+              $scope.totalCount = Number(response.headers("Total-Count"));
 
-              console.log("Total Count:", $scope.totalCount);
-
-              if ($scope.totalCount <= $scope.pageSize) {
-                $scope.singlePage = true;
-              } else {
-                $scope.singlePage = false;
-              }
+              $scope.singlePage = $scope.totalCount < $scope.pageSize;
+              
             });
         }
       );
@@ -134,7 +129,9 @@ angular
         // get cards from MTG API
         $http.get(pageLink).then((response) => {
           $scope.cards = response.data;
-          $scope.parseLinkHeader(response.headers("Link"));
+          $scope.parseLinkHeader(response.headers('Link')); // Parse pagination links					
+					$scope.totalCount = Number(response.headers("Total-Count"));
+	  			$scope.singlePage = $scope.totalCount < $scope.pageSize;
         });
       };
 

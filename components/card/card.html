@@ -17,7 +17,7 @@
           <!-- Previous Button -->
           <button
             class="btn btn-primary m-2"
-            ng-disabled="!previousPage || previousPage.length < 1 || singlePage"
+            ng-disabled="!previousPage || !firstPage || previousPage.length < 1 || singlePage"
             ng-click="goToPage(previousPage)"
           >
             Previous
@@ -26,7 +26,7 @@
           <!-- Next Button -->
           <button
             class="btn btn-primary me-2"
-            ng-disabled="!nextPage || nextPage.length < 1 || singlePage"
+            ng-disabled="!nextPage || !lastPage || nextPage.length < 1 || singlePage"
             ng-click="goToPage(nextPage)"
           >
             Next
@@ -62,7 +62,7 @@
       <!-- First Button -->
       <button
         class="btn btn-primary me-2"
-        ng-disabled="!firstPage || totalCount <= count"
+        ng-disabled="!firstPage || firstPage.length < 1 || singlePage"
         ng-click="goToPage(firstPage)"
       >
         First
@@ -71,7 +71,7 @@
       <!-- Previous Button -->
       <button
         class="btn btn-primary m-2"
-        ng-disabled="!previousPage || totalCount <= count"
+        ng-disabled="!previousPage || !firstPage || previousPage.length < 1 || singlePage"
         ng-click="goToPage(previousPage)"
       >
         Previous
@@ -80,7 +80,7 @@
       <!-- Next Button -->
       <button
         class="btn btn-primary me-2"
-        ng-disabled="!nextPage || totalCount <= count"
+        ng-disabled="!nextPage || !lastPage || nextPage.length < 1 || singlePage"
         ng-click="goToPage(nextPage)"
       >
         Next
@@ -89,7 +89,7 @@
       <!-- Last Button -->
       <button
         class="btn btn-primary me-2"
-        ng-disabled="!lastPage || totalCount <= count"
+        ng-disabled="!lastPage || lastPage.length < 1 || singlePage"
         ng-click="goToPage(lastPage)"
       >
         Last

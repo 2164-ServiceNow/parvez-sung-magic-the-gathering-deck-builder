@@ -1,31 +1,50 @@
-<div class="container mt-4">
+<div class="container-lg">
+  <div class="container my-4">
+    <div class="d-flex flex-wrap justify-content-center m-2">
     <!-- Show set list from search with page buttons -->
-
-
-    <div ng-if="sets.sets && sets.sets.length > 0 && setDetails == ''">
+ 
+    <div ng-if="sets.sets && sets.sets.length > 1 && setDetails =='' " >
+        <div ng-if="sets !== undefined || sets.sets.length>1" >
+    
         <!-- Pagination Buttons -->
-        <div class="mb-3 d-flex justify-content-center">
+                
             <!-- First Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!firstPage" ng-click="goToPage(firstPage)">
-                First
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!firstPage || firstPage.length < 1 || singlePage"
+              ng-click="goToPage(firstPage)"
+            >
+              First
             </button>
-
+  
             <!-- Previous Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!previousPage" ng-click="goToPage(previousPage)">
-                Previous
+            <button
+              class="btn btn-primary m-2"
+              ng-disabled="!previousPage || !firstPage || previousPage.length < 1 || singlePage"
+              ng-click="goToPage(previousPage)"
+            >
+              Previous
             </button>
-
+  
             <!-- Next Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!nextPage" ng-click="goToPage(nextPage)">
-                Next
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!nextPage || !lastPage || nextPage.length < 1 || singlePage"
+              ng-click="goToPage(nextPage)"
+            >
+              Next
             </button>
-
+  
             <!-- Last Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!lastPage" ng-click="goToPage(lastPage)">
-                Last
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!lastPage || lastPage.length < 1 || singlePage"
+              ng-click="goToPage(lastPage)"
+            >
+              Last
             </button>
-        </div>
-
+          </div>
+          
         <!-- Set List -->
         <div class="row">
             <div class="col-md-4 mb-3" ng-repeat="set in sets.sets" ng-if="set.name">
@@ -56,30 +75,52 @@
             </div>
         </div>
     </div>
-
-    <div ng-if="sets.sets && sets.sets.length > 0 && setDetails == ''">
-        <div class="mb-3 d-flex justify-content-center">
+    
+    <div ng-if="sets.sets && sets.sets.length > 1 && setDetails =='' ">
+        <div id="pages" ng-if="sets !== undefined || sets.sets.length>1" >
+        
+          
             <!-- First Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!firstPage" ng-click="goToPage(firstPage)">
-                First
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!firstPage || firstPage.length < 1 || singlePage"
+              ng-click="goToPage(firstPage)"
+            >
+              First
             </button>
-
+  
             <!-- Previous Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!previousPage" ng-click="goToPage(previousPage)">
-                Previous
+            <button
+              class="btn btn-primary m-2"
+              ng-disabled="!previousPage || !firstPage || previousPage.length < 1 || singlePage"
+              ng-click="goToPage(previousPage)"
+            >
+              Previous
             </button>
-
+  
             <!-- Next Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!nextPage" ng-click="goToPage(nextPage)">
-                Next
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!nextPage || !lastPage || nextPage.length < 1 || singlePage"
+              ng-click="goToPage(nextPage)"
+            >
+              Next
             </button>
-
+  
             <!-- Last Button -->
-            <button class="btn btn-primary me-2" ng-disabled="!lastPage" ng-click="goToPage(lastPage)">
-                Last
+            <button
+              class="btn btn-primary me-2"
+              ng-disabled="!lastPage || lastPage.length < 1 || singlePage"
+              ng-click="goToPage(lastPage)"
+            >
+              Last
             </button>
-        </div>
+          
     </div>
+    </div>
+  </div>
+  </div>
+  
 
 
 
