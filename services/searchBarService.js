@@ -1,21 +1,20 @@
 angular.module('magicApp')
 	.service('searchBarService', function($rootScope){
-		this.query = "";
-		this.pageNumber = 0;
-		this.pageSize = 20;
-		this.searchOption = "card";
+		this.query = "" // string query from input
+		this.pageNumber = 0 // current page
+		this.pageSize = 20 // number of units
+		this.searchOption = "card" // identify object to look for
 
 		this.getSearchOption = function(){
-			return this.searchOption;
+			return this.searchOption
 		}
 
 		this.setSearchOption = function(searchOption){
-			this.searchOption = searchOption;
+			this.searchOption = searchOption
 		}
 
 		this.setQuery = function(query){
 			this.query = query
-			console.log(`${query} from setQuery in the Service!`);
 		}
 
 		this.getQuery = function() {
@@ -37,8 +36,8 @@ angular.module('magicApp')
 		}
 
         this.resetDetails = function() {
-            $rootScope.$broadcast("resetDetails");
-        };
+            $rootScope.$broadcast("resetDetails")
+        }
 
 		
 	})
