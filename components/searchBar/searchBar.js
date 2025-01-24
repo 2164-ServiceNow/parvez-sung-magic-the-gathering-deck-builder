@@ -15,7 +15,7 @@ angular.module("searchBar", []).component("searchbar", {
     $scope.searchValue = ""; // ng-model, default for search value
     $scope.pageNumber = 1; // default for page number
     $scope.pageSize = 20; // default for number of cards per page
-    $scope.cmcValue = 1; // variable from cummulatie mana cost
+    $scope.cmcValue = null; // variable from cummulatie mana cost
 
     // set the query to the default values valid for all searches and pagination 
     searchBarService.setQuery(
@@ -173,6 +173,10 @@ angular.module("searchBar", []).component("searchbar", {
 
     // The Search Function
     $scope.search = function () {
+
+      // set the page size in the service
+      searchBarService.setPageSize($scope.pageSize); 
+      
       // creating strings from selected checkboxes
 
       // Join selected colors into a string
@@ -201,8 +205,9 @@ angular.module("searchBar", []).component("searchbar", {
         // Add selected superTypes if they exist
         $scope.selectedSuperTypesQuery.length > 0 ? `&supertypes=${$scope.selectedSuperTypesQuery}`: "",
         // Add selected subTypes if they exist
-        $scope.selectedSubTypesQuery.length > 0? `&subtypes=${$scope.selectedSubTypesQuery}`: "",
+        $scope.selectedSubTypesQuery.length > 0 ? `&subtypes=${$scope.selectedSubTypesQuery}`: "",
         // Add page number and page size
+        $scope.cmcValue !== null && typeof $scope.cmcValue === 'number' ? `&cmc=${$scope.cmcValue}` : "",
         `&page=${$scope.pageNumber}&pageSize=${$scope.pageSize}`,
       ];
 
@@ -210,6 +215,7 @@ angular.module("searchBar", []).component("searchbar", {
       const finalQuery = queryParts.join("").trim();
 
       // Set the query in the service
+      console.log(`this is the final Query ${finalQuery}`);
       searchBarService.setQuery(finalQuery);
 
       

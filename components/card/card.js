@@ -25,12 +25,23 @@ angular
 
       // imgPlaceHolder object to store placeholder image
       $scope.imgPlaceHolder = "images/placeholderCard.jpg";
-      
+
       // modalCard object to store card details for modal
       $scope.modalCard = [];
 
       // decks object to store deck information
       $scope.decks = [];
+
+      //
+      $scope.singlePage = false;
+
+      $scope.$watch(
+        function () {
+          // get search query
+          return searchBarService.getPageSize();
+        },function(pageSize){
+          $scope.pageSize = pageSize;
+        });
 
       // selectedDeckIndex object to store selected deck index
       $scope.$watch(
@@ -38,7 +49,8 @@ angular
           // get search query
           return searchBarService.getQuery();
         },
-        function (newQuery) { // call http.get with new query and save response to $scope.cards
+        function (newQuery) {
+          // call http.get with new query and save response to $scope.cards
           // set searchValue to newQuery
           $scope.searchValue = newQuery;
 
@@ -48,8 +60,19 @@ angular
             .then((response) => {
               // store response data in $scope.cards
               $scope.cards = response.data;
+
               // parse pagination links
               $scope.parseLinkHeader(response.headers("Link"));
+
+              $scope.totalCount = response.headers("Total-Count");
+
+              console.log("Total Count:", $scope.totalCount);
+
+              if ($scope.totalCount <= $scope.pageSize) {
+                $scope.singlePage = true;
+              } else {
+                $scope.singlePage = false;
+              }
             });
         }
       );
@@ -133,7 +156,6 @@ angular
       // set deck index
       $scope.setDeckIndex = function (index) {
         $scope.deckIndex = index;
-        
       };
     },
   });

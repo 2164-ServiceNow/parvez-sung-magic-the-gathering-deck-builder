@@ -8,7 +8,7 @@
           <!-- First Button -->
           <button
             class="btn btn-primary me-2"
-            ng-disabled="!firstPage"
+            ng-disabled="!firstPage || firstPage.length < 1 || singlePage"
             ng-click="goToPage(firstPage)"
           >
             First
@@ -17,7 +17,7 @@
           <!-- Previous Button -->
           <button
             class="btn btn-primary m-2"
-            ng-disabled="!previousPage"
+            ng-disabled="!previousPage || previousPage.length < 1 || singlePage"
             ng-click="goToPage(previousPage)"
           >
             Previous
@@ -26,7 +26,7 @@
           <!-- Next Button -->
           <button
             class="btn btn-primary me-2"
-            ng-disabled="!nextPage"
+            ng-disabled="!nextPage || nextPage.length < 1 || singlePage"
             ng-click="goToPage(nextPage)"
           >
             Next
@@ -35,7 +35,7 @@
           <!-- Last Button -->
           <button
             class="btn btn-primary me-2"
-            ng-disabled="!lastPage"
+            ng-disabled="!lastPage || lastPage.length < 1 || singlePage"
             ng-click="goToPage(lastPage)"
           >
             Last
@@ -57,41 +57,43 @@
       </div>
 
     <!-- show pagination at the bottom of the page for cards -->
-    <div id="pages1" ng-if="cards !== undefined || cards.cards.length>1" >
+    <div id="pages" ng-if="cards !== undefined || cards.cards.length>1" >
+          
       <!-- First Button -->
       <button
-      class="btn btn-primary me-2"
-      ng-disabled="!firstPage"
-      ng-click="goToPage(firstPage)"
-    >
-      First
-    </button>
-    <!-- Previous Button -->
-    <button
-      class="btn btn-primary m-2"
-      ng-disabled="!previousPage"
-      ng-click="goToPage(previousPage)"
-    >
-      Previous
-    </button>
+        class="btn btn-primary me-2"
+        ng-disabled="!firstPage || totalCount <= count"
+        ng-click="goToPage(firstPage)"
+      >
+        First
+      </button>
 
-    <!-- Next Button -->
-    <button
-      class="btn btn-primary me-2"
-      ng-disabled="!nextPage"
-      ng-click="goToPage(nextPage)"
-    >
-      Next
-    </button>
+      <!-- Previous Button -->
+      <button
+        class="btn btn-primary m-2"
+        ng-disabled="!previousPage || totalCount <= count"
+        ng-click="goToPage(previousPage)"
+      >
+        Previous
+      </button>
 
-    <!-- Last Button -->
-    <button
-      class="btn btn-primary me-2"
-      ng-disabled="!lastPage"
-      ng-click="goToPage(lastPage)"
-    >
-      Last
-    </button>
+      <!-- Next Button -->
+      <button
+        class="btn btn-primary me-2"
+        ng-disabled="!nextPage || totalCount <= count"
+        ng-click="goToPage(nextPage)"
+      >
+        Next
+      </button>
+
+      <!-- Last Button -->
+      <button
+        class="btn btn-primary me-2"
+        ng-disabled="!lastPage || totalCount <= count"
+        ng-click="goToPage(lastPage)"
+      >
+        Last
+      </button>
     </div>
     </div>
 
