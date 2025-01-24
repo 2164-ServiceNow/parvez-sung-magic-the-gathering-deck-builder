@@ -81,6 +81,8 @@
         </div>
     </div>
 
+
+
     <!-- Booster Error -->
     <div ng-show="booster === 'error'" class="alert alert-danger mt-3">
         <p>BOOSTER UNAVAILABLE</p>
@@ -103,3 +105,13 @@
         <p>NOT FOUND IN DATABASE</p>
     </div>
 </div>
+
+<!-- card details modal -->
+<card-modal></card-modal>
+
+<!-- add to deck modal that adds cards -->
+<add-to-deck-modal
+  modal-card="modalCard"
+  decks="decks"
+  on-add-to-deck="addToDeck(card, index)"
+></add-to-deck-modal>
